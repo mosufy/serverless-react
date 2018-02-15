@@ -1,0 +1,33 @@
+service:
+  name: reactServerless
+
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: ${opt:stage, self:custom.defaultStage}
+  profile: ${self:custom.profiles.${self:provider.stage}}
+  region: ap-southeast-1
+  apiKeys:
+    - ${opt:stage, self:custom.defaultStage}-serviceKey
+
+custom:
+  defaultStage: dev
+  profiles:
+    dev: serverlessDevProfile
+    prod: serverlessProdProfile
+  serverless-offline:
+    port: 3001
+
+functions:
+  servicePing:
+    handler: api/src/services.ping
+    description: Service online availability test
+    events:
+      - http:
+          path: services/ping
+          method: get
+          private: true
