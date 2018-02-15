@@ -24,7 +24,7 @@ custom:
 
 functions:
   servicePing:
-    handler: api/src/services.ping
+    handler: src/services.ping
     description: Service online availability test
     events:
       - http:
