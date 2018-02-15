@@ -29,3 +29,17 @@ You may also run both at the same time
 ```
 $ yarn dev
 ```
+
+## Unit Test
+
+Mocha + Chai.js unit testing with Istanbul + iSparta code coverage
+
+To test
+```
+$ yarn test
+```
+
+To test with code coverage report
+```
+$ yarn test:coverage
+```

@@ -1,13 +1,12 @@
-// eslint-disable-next-line import/prefer-default-export
-
+import Service from './models/Service';
 import { response, error } from "./common";
 
-export const ping = (event, context, cb) => {
-  const p = new Promise((resolve) => {
-    resolve('success');
-  });
+export const ping = (event, context, callback) => {
+  const resp = new Promise((resolve) => resolve('success'));
 
-  p
-    .then(() => cb(null, response(event, 'Pong')))
-    .catch(e => cb(null, error(event, e.message)));
+  let service = new Service;
+
+  resp
+    .then(() => callback(null, response(event, service.ping())))
+    .catch(e => callback(null, error(event, e.message)));
 };
