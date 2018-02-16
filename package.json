@@ -28,12 +28,5 @@
     "webpack": "^3.3.0"
   },
   "author": "mosufy <mosufy@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "lodash": "^4.17.5",
-    "react-redux": "^5.0.6",
-    "redux": "^3.7.2",
-    "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
-  }
+  "license": "MIT"
 }
