@@ -1,19 +1,54 @@
 import React, { Component } from 'react';
-import logo from './../assets/img/logo.svg';
-import './../assets/css/App.css';
+
+import Navbar from "./common/Navbar";
+import Hero from "./home/Hero";
+import Footer from "./common/Footer";
+import Featurette from "./home/Featurette";
+
+import Featurette1Img from "../assets/img/featurette1.jpg";
+import Featurette2Img from "../assets/img/featurette2.jpg";
+import Featurette3Img from "../assets/img/featurette3.jpg";
 
 class App extends Component {
   render() {
-    console.log(this.props);
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <Navbar/>
+        <Hero/>
+
+        <div className="container">
+
+          <hr className="featurette-divider"/>
+
+          <div id="about"/>
+
+          <Featurette imgSrc={Featurette1Img}
+                      pullDirection="right"
+                      heading="One-On-One"
+                      subHeading="Because Everyone Is Different"
+                      text="Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo."/>
+
+          <hr className="featurette-divider"/>
+
+          <Featurette imgSrc={Featurette2Img}
+                      pullDirection="left"
+                      heading="MOE Certified Tutors"
+                      subHeading="Are Our Quality Assurance"
+                      text="Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo."/>
+
+          <hr className="featurette-divider"/>
+
+          <Featurette imgSrc={Featurette3Img}
+                      pullDirection="right"
+                      heading="This Third Heading"
+                      subHeading="Will Seal the Deal"
+                      text="Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo."/>
+
+          <hr className="featurette-divider"/>
+
+          <Footer/>
+
+        </div>
       </div>
     );
   }

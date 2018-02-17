@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 
-import './assets/css/index.css';
+import './assets/themes/css/one-page-wonder.css';
+import './assets/css/main.css';
 
 import AppContainer from './containers/AppContainer';
 import store from './store';
