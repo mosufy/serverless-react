@@ -12,7 +12,7 @@ import RegisterInterestModal from "./modal/RegisterInterestModal";
 
 class App extends Component {
   render() {
-    let { showRegisterInterestModal, handleRegisterInterestModalOnClick } = this.props;
+    let { showRegisterInterestModal, handleRegisterInterestModalOnClick, handleRegisterInterestOnSubmit } = this.props;
 
     return (
       <div>
@@ -52,7 +52,9 @@ class App extends Component {
 
           <hr className="featurette-divider"/>
 
-          <RegisterInterestModal showModal={showRegisterInterestModal} handleModalOnClick={handleRegisterInterestModalOnClick}/>
+          <RegisterInterestModal showModal={showRegisterInterestModal}
+                                 handleModalOnClick={handleRegisterInterestModalOnClick}
+                                 handleRegisterInterestOnSubmit={handleRegisterInterestOnSubmit}/>
 
           <Footer/>
 
