@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import App from './../components/App';
+import { toggleRegisterInterestModal } from "../actions/modalActions";
 
 class AppContainer extends Component {
   render() {
@@ -11,13 +12,15 @@ class AppContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    metadata: state.metadata
+    showRegisterInterestModal: state.modal.registerInterestModal,
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    //
+    handleRegisterInterestModalOnClick() {
+      dispatch(toggleRegisterInterestModal());
+    }
   }
 };
 

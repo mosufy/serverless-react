@@ -50,3 +50,18 @@ body {
 .navbar-collapse .in {
   margin-top: 15px;
 }
+
+.modal-dialog { /* Vertically align modal */
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%) !important;
+}
+
+@media(min-width:768px) {
+  .modal-dialog { /* Vertically align modal */
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%) !important;
+  }
+}

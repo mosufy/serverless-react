@@ -1,15 +1,15 @@
-import {createStore, applyMiddleware} from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import throttle from 'lodash/throttle';
 import thunk from 'redux-thunk';
 
-import {saveState, loadState} from './localStorage';
+import { saveState, loadState } from './localStorage';
 import reducers from './reducers';
 import config from './config';
 
 const middlewares = [];
 
 if (config.enable_logger === true) {
-  const {createLogger} = require('redux-logger');
+  const { createLogger } = require('redux-logger');
   const logger = createLogger({
     diff: true
   });
