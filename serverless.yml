@@ -28,6 +28,6 @@ functions:
     description: Service online availability test
     events:
       - http:
-          path: services/ping
+          path: api/services/ping
           method: get
           private: true
