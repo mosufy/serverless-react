@@ -31,3 +31,4 @@ functions:
           path: api/services/ping
           method: get
           private: true
+          cors: true

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Modal, Row, Col, FormControl, FormGroup, Checkbox, ControlLabel, HelpBlock, Alert } from "react-bootstrap";
 import ButtonLoader from "react-bootstrap-button-loader";
 
-import { minField, emailFormat, checkboxRequired } from "../../utils/formValidation";
+import { minField, emailFormat, checkboxRequired } from "../../lib/formValidation";
 
 class RegisterInterestModal extends Component {
   constructor(props, context) {

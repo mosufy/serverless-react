@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import Home from './../components/home/Home';
 import { toggleRegisterInterestModal } from "../actions/modalActions";
-import { signup } from "../actions/authActions";
+import { pingTest, signup } from "../actions/authActions";
 
 class HomeContainer extends Component {
   render() {
@@ -22,6 +22,7 @@ const mapDispatchToProps = dispatch => {
   return {
     handleRegisterInterestModalOnClick() {
       dispatch(toggleRegisterInterestModal());
+      dispatch(pingTest());
     },
     handleRegisterInterestOnSubmit(formValues) {
       dispatch(signup(formValues));
