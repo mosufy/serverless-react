@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import App from './../components/App';
+import Home from './../components/home/Home';
 import { toggleRegisterInterestModal } from "../actions/modalActions";
 import { signup } from "../actions/authActions";
 
-class AppContainer extends Component {
+class HomeContainer extends Component {
   render() {
-    return <App {...this.props} />;
+    return <Home {...this.props} />;
   }
 }
 
@@ -29,4 +29,4 @@ const mapDispatchToProps = dispatch => {
   }
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AppContainer));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeContainer));

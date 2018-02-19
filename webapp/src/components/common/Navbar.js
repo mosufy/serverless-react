@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Navbar extends Component {
   state = {
@@ -24,13 +25,13 @@ class Navbar extends Component {
               <span className="icon-bar"/>
               <span className="icon-bar"/>
             </button>
-            <a className="navbar-brand">Sher Tuition</a>
+            <Link className="navbar-brand" to="/">Sher Tuition</Link>
           </div>
 
           <div className={`collapse navbar-collapse ${displayCollapsedNavbar ? "in" : ""}`}>
             <ul className="nav navbar-nav">
               <li>
-                <a href="#about" onClick={() => this.toggleNavbar()}>About</a>
+                <Link to="/#about" onClick={() => this.toggleNavbar()}>About</Link>
               </li>
               <li>
                 <a href="#services" onClick={() => this.toggleNavbar()}>Services</a>
