@@ -16,7 +16,7 @@ const middlewares = [];
 // Build the middleware for intercepting and dispatching navigation actions
 middlewares.push(routerMiddleware(history));
 
-if (config.enable_logger === true) {
+if (config.app.ENABLE_LOGGER === true) {
   const { createLogger } = require('redux-logger');
   const logger = createLogger({
     diff: true

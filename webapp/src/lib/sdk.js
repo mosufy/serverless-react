@@ -22,7 +22,7 @@ const sendRequest = (
 
   if (type === authXAPIKey) {
     headers = {
-      'x-api-key': appConfig.x_api_key || '',
+      'x-api-key': appConfig.api_gateway.X_API_KEY || '',
     };
   } else {
     bearerToken = bearerToken !== null ? bearerToken : !isEmpty(store.getState().auth) ? store.getState().auth.token : '';
@@ -50,7 +50,7 @@ const sendRequest = (
 
   let axiosOptions = {
     method: reqMethod,
-    url: appConfig.base_url + path,
+    url: appConfig.app.SDK_BASE_URL + path,
     [paramType]: params,
     headers,
   };
