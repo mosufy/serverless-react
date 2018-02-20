@@ -10,7 +10,7 @@ import RegisterInterestModal from "../modal/RegisterInterestModal";
 
 class Home extends Component {
   render() {
-    let { showRegisterInterestModal, handleRegisterInterestModalOnClick, handleRegisterInterestOnSubmit } = this.props;
+    let { showRegisterInterestModal, handleRegisterInterestModalOnClick, handleRegisterInterestOnSubmit, formStatus } = this.props;
 
     return (
       <div>
@@ -50,7 +50,8 @@ class Home extends Component {
 
           <RegisterInterestModal showModal={showRegisterInterestModal}
                                  handleModalOnClick={handleRegisterInterestModalOnClick}
-                                 handleRegisterInterestOnSubmit={handleRegisterInterestOnSubmit}/>
+                                 handleRegisterInterestOnSubmit={handleRegisterInterestOnSubmit}
+                                 formStatus={formStatus}/>
 
         </div>
       </div>

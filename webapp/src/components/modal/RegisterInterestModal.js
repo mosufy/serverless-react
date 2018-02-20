@@ -21,8 +21,21 @@ class RegisterInterestModal extends Component {
       },
       formError: {},
       formErrorMessage: null,
+      formSuccessMessage: null,
       formSubmitting: false,
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.formStatus !== this.props.formStatus) {
+      if (nextProps.formStatus.alert !== null) {
+        this.setState({
+          formErrorMessage: nextProps.formStatus.alert.type === 'error' ? nextProps.formStatus.alert.message : null,
+          formSuccessMessage: nextProps.formStatus.alert.type === 'success' ? nextProps.formStatus.alert.message : null,
+          formSubmitting: false,
+        })
+      }
+    }
   }
 
   handleChange(e) {
@@ -51,11 +64,13 @@ class RegisterInterestModal extends Component {
 
     if (Object.keys(this.state.formError).length > 0) {
       this.setState({
-        formErrorMessage: 'Please ensure you have entered your information correctly.'
+        formErrorMessage: 'Please ensure you have entered your information correctly.',
+        formSuccessMessage: null,
       })
     } else {
       this.setState({
         formErrorMessage: null,
+        formSuccessMessage: null,
         formSubmitting: true,
       });
       this.props.handleRegisterInterestOnSubmit(this.state.formFields);
@@ -64,7 +79,7 @@ class RegisterInterestModal extends Component {
 
   render() {
     let { showModal, handleModalOnClick } = this.props;
-    let { formError, formErrorMessage, formSubmitting } = this.state;
+    let { formErrorMessage, formSuccessMessage, formSubmitting } = this.state;
 
     return (
       <Modal show={showModal} onHide={handleModalOnClick} bsStyle="primary">
@@ -73,58 +88,71 @@ class RegisterInterestModal extends Component {
             <Modal.Title>Register Your Interest</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {formErrorMessage && <Alert bsStyle="danger">{formErrorMessage}</Alert>}
+            {(formSuccessMessage || formErrorMessage) &&
+            <Alert bsStyle={formSuccessMessage ? 'success' : 'danger'}>{formSuccessMessage || formErrorMessage}</Alert>}
 
             <h4>Create an account with us to register your interest</h4>
             <p>By creating an account, you can manage your schedules and arrange to make automatic future payments!</p>
 
-            <p>&nbsp;</p>
-
-            <Row className="show-grid">
-              <Col xs={12} md={6}>
-                <FieldGroup id="firstName" type="text" label="First Name" placeholder="Enter First Name"
-                            onChange={this.handleChange}
-                            validationError={formError.firstName}
-                            disabled={formSubmitting}/>
-              </Col>
-              <Col xs={12} md={6}>
-                <FieldGroup id="lastName" type="text" label="Last Name" placeholder="Enter Last Name"
-                            onChange={this.handleChange}
-                            validationError={formError.lastName}
-                            disabled={formSubmitting}/>
-              </Col>
-            </Row>
-
-            <Row className="show-grid">
-              <Col xs={12} md={6}>
-                <FieldGroup id="email" type="text" label="Email" placeholder="Enter Email"
-                            onChange={this.handleChange}
-                            validationError={formError.email}
-                            disabled={formSubmitting}/>
-              </Col>
-              <Col xs={12} md={6}>
-                <FieldGroup id="password" type="text" label="Password" placeholder="Enter Password"
-                            onChange={this.handleChange}
-                            validationError={formError.password}
-                            disabled={formSubmitting}/>
-              </Col>
-            </Row>
-
-            <Checkbox id="agree"
-                      onChange={this.handleChange}
-                      validationState={formError.agree === undefined || formError.agree === null ? null : 'error'}
-                      disabled={formSubmitting}>
-              By submitting this form, I agree to the Terms of Service.
-              {formError.agree !== undefined && formError.agree !== null && <HelpBlock>{formError.agree}</HelpBlock>}
-            </Checkbox>
+            {!formSuccessMessage && this.showForm()}
 
           </Modal.Body>
+
+          {!formSuccessMessage &&
           <Modal.Footer>
             <ButtonLoader type="submit" bsStyle="danger" loading={formSubmitting}>Submit</ButtonLoader>
-          </Modal.Footer>
+          </Modal.Footer>}
         </form>
       </Modal>
     );
+  }
+
+  showForm() {
+    let { formError, formSubmitting } = this.state;
+
+    return (
+      <div>
+        <p>&nbsp;</p>
+
+        <Row className="show-grid">
+          <Col xs={12} md={6}>
+            <FieldGroup id="firstName" type="text" label="First Name" placeholder="Enter First Name"
+                        onChange={this.handleChange}
+                        validationError={formError.firstName}
+                        disabled={formSubmitting}/>
+          </Col>
+          <Col xs={12} md={6}>
+            <FieldGroup id="lastName" type="text" label="Last Name" placeholder="Enter Last Name"
+                        onChange={this.handleChange}
+                        validationError={formError.lastName}
+                        disabled={formSubmitting}/>
+          </Col>
+        </Row>
+
+        <Row className="show-grid">
+          <Col xs={12} md={6}>
+            <FieldGroup id="email" type="text" label="Email" placeholder="Enter Email"
+                        onChange={this.handleChange}
+                        validationError={formError.email}
+                        disabled={formSubmitting}/>
+          </Col>
+          <Col xs={12} md={6}>
+            <FieldGroup id="password" type="password" label="Password" placeholder="Enter Password"
+                        onChange={this.handleChange}
+                        validationError={formError.password}
+                        disabled={formSubmitting}/>
+          </Col>
+        </Row>
+
+        <Checkbox id="agree"
+                  onChange={this.handleChange}
+                  validationState={formError.agree === undefined || formError.agree === null ? null : 'error'}
+                  disabled={formSubmitting}>
+          By submitting this form, I agree to the Terms of Service.
+          {formError.agree !== undefined && formError.agree !== null && <HelpBlock>{formError.agree}</HelpBlock>}
+        </Checkbox>
+      </div>
+    )
   }
 
   validateFormField(state, formGroupName = null) {
