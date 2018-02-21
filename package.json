@@ -8,12 +8,18 @@
     "server": "sls offline start",
     "client": "cd client/site && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
-    "build:site": "cd client/site && yarn build && cd ../../ && serverless client deploy",
-    "build:account": "serverless client deploy --bucketName account-sher.rapidstax.com --distributionFolder client/account/build",
-    "build:admin": "serverless client deploy --bucketName admin-sher.rapidstax.com --distributionFolder client/admin/build",
+    "build:site": "cd client/site && yarn build",
+    "build:account": "cd client/account && yarn build",
+    "build:admin": "cd client/admin && yarn build",
+    "deploy:site": "yarn build:site && serverless client deploy && yarn cf-invalidate:site",
+    "deploy:account": "serverless client deploy --bucketName account-sher.rapidstax.com --distributionFolder client/account/build && yarn cf-invalidate:site",
+    "deploy:admin": "serverless client deploy --bucketName admin-sher.rapidstax.com --distributionFolder client/admin/build && yarn cf-invalidate:site",
     "remove:site": "serverless client remove",
     "remove:account": "serverless client remove --bucketName account-sher.rapidstax.com",
-    "remove:admin": "serverless client remove --bucketName admin-sher.rapidstax.com"
+    "remove:admin": "serverless client remove --bucketName admin-sher.rapidstax.com",
+    "cf-invalidate:site": "aws cloudfront create-invalidation --distribution-id E19J4F4Q0N4U0A --paths \"/*\"",
+    "cf-invalidate:account": "",
+    "cf-invalidate:admin": ""
   },
   "devDependencies": {
     "babel": "^6.23.0",

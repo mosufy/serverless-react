@@ -71,9 +71,9 @@ There are 3 Client sites that will be served from S3:
 
 Deploy Site to S3 bucket
 ```
-$ yarn build:site
-$ yarn build:account
-$ yarn build:admin
+$ yarn deploy:site
+$ yarn deploy:account
+$ yarn deploy:admin
 ```
 
 Take down Site
