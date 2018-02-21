@@ -7,7 +7,13 @@
     "test:coverage": "babel-node ./node_modules/.bin/isparta cover _mocha",
     "server": "sls offline start",
     "client": "cd client/site && yarn start",
-    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\""
+    "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
+    "build:site": "cd client/site && yarn build && cd ../../ && serverless client deploy",
+    "build:account": "serverless client deploy --bucketName account-sher.rapidstax.com --distributionFolder client/account/build",
+    "build:admin": "serverless client deploy --bucketName admin-sher.rapidstax.com --distributionFolder client/admin/build",
+    "remove:site": "serverless client remove",
+    "remove:account": "serverless client remove --bucketName account-sher.rapidstax.com",
+    "remove:admin": "serverless client remove --bucketName admin-sher.rapidstax.com"
   },
   "devDependencies": {
     "babel": "^6.23.0",
@@ -23,6 +29,7 @@
     "isparta": "^4.0.0",
     "istanbul": "^0.4.5",
     "mocha": "^5.0.1",
+    "serverless-finch": "^1.4.0",
     "serverless-offline": "^3.17.0",
     "serverless-webpack": "^3.1.1",
     "webpack": "^3.3.0"

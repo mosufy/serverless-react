@@ -16,6 +16,9 @@ jspm_packages
 
 # production
 /build
+/client/site/build
+/client/admin/build
+/client/account/build
 
 # misc
 .DS_Store

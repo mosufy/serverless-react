@@ -4,6 +4,7 @@ service:
 plugins:
   - serverless-webpack
   - serverless-offline
+  - serverless-finch
 
 provider:
   name: aws
@@ -21,6 +22,9 @@ custom:
     prod: serverlessProdProfile
   serverless-offline:
     port: 3001
+  client:
+      bucketName: ${opt:bucketName, 'sher.rapidstax.com'}
+      distributionFolder: ${opt:distributionFolder, 'client/site/build'}
 
 functions:
   servicePing:
@@ -28,7 +32,7 @@ functions:
     description: Service online availability test
     events:
       - http:
-          path: api/services/ping
+          path: services/ping
           method: get
           private: true
           cors: true
