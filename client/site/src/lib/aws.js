@@ -26,6 +26,7 @@ export const signupCognitoUser = (values) => {
 
   attributeList.push(setCognitoUserAttribute('given_name', firstName));
   attributeList.push(setCognitoUserAttribute('family_name', lastName));
+  attributeList.push(setCognitoUserAttribute('email', email));
 
   return new Promise((resolve, reject) =>
     userPool.signUp(email, password, attributeList, null, (err, result) => {

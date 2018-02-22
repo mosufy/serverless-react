@@ -53,11 +53,11 @@ body {
 
 .modal-dialog { /* Vertically align modal */
   position: absolute;
-  top: 50%;
-  transform: translate(0, -50%) !important;
+  top: 0%;
+  transform: translate(0, -0%) !important;
 }
 
-@media(min-width:768px) {
+@media(min-width:737px) {
   .modal-dialog { /* Vertically align modal */
     position: absolute;
     top: 30%;
