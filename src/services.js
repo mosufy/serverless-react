@@ -1,10 +1,10 @@
-import Service from './models/Service';
+import Service from './repositories/Service';
 import { response, error } from "./common";
 
 export const ping = (event, context, callback) => {
   const resp = new Promise((resolve) => resolve('success'));
 
-  let service = new Service;
+  let service = new Service();
 
   resp
     .then(() => callback(null, response(event, service.ping())))

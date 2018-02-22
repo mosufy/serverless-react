@@ -13,18 +13,23 @@ provider:
   profile: ${self:custom.profiles.${self:provider.stage}}
   region: ap-southeast-1
   apiKeys:
-    - ${opt:stage, self:custom.defaultStage}-serviceKey
+    - ${self:custom.stage}-serviceKey
+  environment:
+    stage: ${self:custom.stage}
+    cognitoUserPoolId: ${self:custom.cognitoUserPoolName}
 
 custom:
   defaultStage: dev
+  stage: ${opt:stage, self:custom.defaultStage}
   profiles:
     dev: serverlessDevProfile
     prod: serverlessProdProfile
   serverless-offline:
     port: 3001
   client:
-      bucketName: ${opt:bucketName, 'sher.rapidstax.com'}
-      distributionFolder: ${opt:distributionFolder, 'client/site/build'}
+    bucketName: ${opt:bucketName, 'sher.rapidstax.com'}
+    distributionFolder: ${opt:distributionFolder, 'client/site/build'}
+  cognitoUserPoolName: ${self:custom.stage}-SherTuitionUserPool
 
 functions:
   servicePing:
@@ -36,3 +41,47 @@ functions:
           method: get
           private: true
           cors: true
+  cognitoCustomMessage:
+      handler: src/awsCognito.customMessage
+      description: Cognito user signup custom message trigger lambda function
+      events:
+        - cognitoUserPool:
+            pool: SherTuitionUserPool
+            trigger: CustomMessage
+
+resources:
+  Resources:
+    CognitoUserPoolSherTuitionUserPool:
+      Type: "AWS::Cognito::UserPool"
+      Properties:
+        UserPoolName: ${self:custom.stage}-SherTuitionUserPool
+        EmailConfiguration:
+          ReplyToEmailAddress: "no-reply@shertuition.com"
+        Schema:
+          - AttributeDataType: String
+            Mutable: True
+            Name: email
+            Required: True
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+            RequireLowercase: False
+            RequireNumbers: False
+            RequireSymbols: False
+            RequireUppercase: False
+    CognitoUserPoolClientSherTuitionUserPoolSiteClient:
+      Type: "AWS::Cognito::UserPoolClient"
+      Properties:
+        ClientName: SherTuitionUserPoolSiteClient
+        ReadAttributes:
+          - email
+          - email_verified
+          - family_name
+          - given_name
+        UserPoolId:
+          Ref: CognitoUserPoolSherTuitionUserPool
+        WriteAttributes:
+          - email
+          - family_name
+          - given_name
+          - phone_number

@@ -1,6 +1,6 @@
 import chai from "chai";
 
-import Service from './../src/models/Service';
+import Service from '../src/repositories/Service';
 
 let assert = chai.assert;
 
