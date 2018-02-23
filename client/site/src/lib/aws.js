@@ -51,9 +51,9 @@ export const confirmCognitoUser = (username, confirmationCode) => {
   return new Promise((resolve, reject) => {
     cognitoUser.confirmRegistration(confirmationCode, true, function (err, result) {
       if (err) {
+        console.log(err);
         reject(err);
       } else {
-        console.log(err);
         resolve(result);
       }
     });

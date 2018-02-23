@@ -33,7 +33,7 @@ custom:
 
 functions:
   servicePing:
-    handler: src/services.ping
+    handler: src/app/handlers/services.ping
     description: Service online availability test
     events:
       - http:
@@ -42,7 +42,7 @@ functions:
           private: true
           cors: true
   cognitoCustomMessage:
-      handler: src/awsCognito.customMessage
+      handler: src/app/handlers/awsCognito.customMessage
       description: Cognito user signup custom message trigger lambda function
       events:
         - cognitoUserPool:

@@ -1,5 +1,5 @@
-import confirmationMessage from "../assets/templates/confirmationMessage";
-import config from "../config";
+import confirmationMessage from "../../assets/templates/confirmationMessage";
+import config from "../../config";
 
 class AwsCognito {
   setCustomMessage(event) {

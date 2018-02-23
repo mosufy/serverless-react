@@ -1,4 +1,4 @@
-import AwsCognito from "./repositories/AwsCognito";
+import AwsCognito from "../repositories/AwsCognito";
 
 export const customMessage = (event, context) => {
   let awsCognito = new AwsCognito();
