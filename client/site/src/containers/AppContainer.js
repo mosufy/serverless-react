@@ -3,8 +3,6 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import App from './../components/App';
-import { toggleRegisterInterestModal } from "../actions/modalActions";
-import { signup } from "../actions/authActions";
 
 class AppContainer extends Component {
   render() {
@@ -14,18 +12,13 @@ class AppContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    showRegisterInterestModal: state.modal.registerInterestModal,
+    //
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    handleRegisterInterestModalOnClick() {
-      dispatch(toggleRegisterInterestModal());
-    },
-    handleRegisterInterestOnSubmit(formValues) {
-      dispatch(signup(formValues));
-    }
+    //
   }
 };
 

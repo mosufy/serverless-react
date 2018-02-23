@@ -69,15 +69,10 @@ resources:
             RequireNumbers: False
             RequireSymbols: False
             RequireUppercase: False
-    CognitoUserPoolClientSherTuitionUserPoolSiteClient:
+    CognitoUserPoolClientSherTuitionUserPoolClientWebapp:
       Type: "AWS::Cognito::UserPoolClient"
       Properties:
-        ClientName: SherTuitionUserPoolSiteClient
-        ReadAttributes:
-          - email
-          - email_verified
-          - family_name
-          - given_name
+        ClientName: SherTuitionUserPoolClientWebapp
         UserPoolId:
           Ref: CognitoUserPoolSherTuitionUserPool
         WriteAttributes:

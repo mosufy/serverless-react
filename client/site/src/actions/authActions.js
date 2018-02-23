@@ -1,5 +1,5 @@
 import * as sdk from '../lib/sdk';
-import { signupCognitoUser } from "../lib/aws";
+import { signupCognitoUser, confirmCognitoUser } from "../lib/aws";
 import { showError, showSuccess, dismissAlert } from "./formActions";
 
 export const signup = (values) => {
@@ -25,5 +25,11 @@ export const pingTest = () => {
       .catch((err) => {
         console.log('Failed to connect to API');
       })
+  }
+};
+
+export const confirmUser = (username, confirmationCode) => {
+  return (dispatch) => {
+    return confirmCognitoUser(username , confirmationCode);
   }
 };
