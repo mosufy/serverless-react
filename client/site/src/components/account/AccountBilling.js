@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
-import { Breadcrumb, Clearfix } from 'react-bootstrap';
+import { Breadcrumb, Clearfix, Button } from 'react-bootstrap';
 import StripeCheckout from 'react-stripe-checkout';
 
 import AccountBreadcrumb from "../common/AccountBreadcrumb";
 
 class AccountBilling extends Component {
-  onToken = (token) => {
-    fetch('/save-stripe-token', {
-      method: 'POST',
-      body: JSON.stringify(token),
-    }).then(response => {
-      response.json().then(data => {
-        alert(`We are in business, ${data.email}`);
-      });
-    });
-  };
-
   render() {
-    const { onStripeCheckoutTokenCallback } = this.props;
+    const { onStripeCheckoutTokenCallback, billing } = this.props;
 
     return (
       <div>
@@ -39,16 +28,23 @@ class AccountBilling extends Component {
           <strong>Billing Cycle</strong>: Monthly
         </p>
 
-        <StripeCheckout
-          token={onStripeCheckoutTokenCallback}
-          stripeKey="pk_test_g8oJNFsyvXFjLCm6tE6gkZL9"
-          name="SherTuition"
-          description="Improving Life Together"
-          amount={35000}
-          currency="SGD"
-          email="mosufy+asd@gmail.com"
-          allowRememberMe={false}
-        />
+        {billing !== null && billing.status === 'succeeded' ?
+          (
+            <div>
+              <Button bsStyle="success">Subscription Paid</Button>
+            </div>
+          ) : (
+            <StripeCheckout
+              token={onStripeCheckoutTokenCallback}
+              stripeKey="pk_test_g8oJNFsyvXFjLCm6tE6gkZL9"
+              name="SherTuition"
+              description="Improving Life Together"
+              amount={35000}
+              currency="SGD"
+              email="mosufy+asd@gmail.com"
+              allowRememberMe={false}
+            />
+          )}
       </div>
     );
   }

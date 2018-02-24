@@ -5,6 +5,7 @@ import metadata from "./metadata";
 import modal from "./modal";
 import form from "./form";
 import auth from "./auth";
+import billing from "./billing";
 
 // create reducer object
 const reducers = combineReducers({
@@ -13,6 +14,7 @@ const reducers = combineReducers({
   modal,
   form,
   auth,
+  billing,
 });
 
 export default reducers;

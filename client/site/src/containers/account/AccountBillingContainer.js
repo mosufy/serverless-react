@@ -13,7 +13,7 @@ class AccountBillingContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    //
+    billing: state.billing,
   }
 };
 

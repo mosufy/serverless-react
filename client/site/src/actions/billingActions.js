@@ -10,7 +10,15 @@ export const onStripeChargeTokenCallback = (token) => {
       }
     })
       .then((res) => {
-        console.log(res);
+        dispatch({
+          type: 'STORE_BILLING_SUCCESS',
+          payload: {
+            status: res.data.message.status,
+            amount: res.data.message.amount,
+            currency: res.data.message.currency,
+            transaction_id: res.data.message.id,
+          }
+        })
       })
       .catch((err) => {
         console.log(err);
