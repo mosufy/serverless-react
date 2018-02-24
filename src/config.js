@@ -1,6 +1,6 @@
 const config = {
   app: {
-    SITE_LINK: "https://sher.rapidstax.com",
+    SITE_LINK: process.env.SITELINK,
   },
 };
 

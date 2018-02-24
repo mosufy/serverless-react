@@ -8,7 +8,7 @@ import './assets/css/main.css';
 
 import AppContainer from './containers/AppContainer';
 import store, { history } from './store';
-import registerServiceWorker from './registerServiceWorker';
+//import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
   <Provider store={store}>
@@ -17,4 +17,4 @@ ReactDOM.render(
     </ConnectedRouter>
   </Provider>, document.getElementById('root'));
 
-registerServiceWorker();
+//registerServiceWorker();

@@ -5,6 +5,10 @@ plugins:
   - serverless-webpack
   - serverless-offline
   - serverless-finch
+  - serverless-plugin-optimize
+
+package:
+  individually: true
 
 provider:
   name: aws
@@ -15,8 +19,8 @@ provider:
   apiKeys:
     - ${self:custom.stage}-serviceKey
   environment:
-    stage: ${self:custom.stage}
-    cognitoUserPoolId: ${self:custom.cognitoUserPoolName}
+    STAGE: ${self:custom.stage}
+    SITELINK: ${self:custom.app.siteLink.${self:custom.stage}}
 
 custom:
   defaultStage: dev
@@ -30,6 +34,10 @@ custom:
     bucketName: ${opt:bucketName, 'sher.rapidstax.com'}
     distributionFolder: ${opt:distributionFolder, 'client/site/build'}
   cognitoUserPoolName: ${self:custom.stage}-SherTuitionUserPool
+  app:
+    siteLink:
+      dev: "https://sher.rapidstax.com"
+      prod: "https://sher.rapidstax.com"
 
 functions:
   servicePing:
