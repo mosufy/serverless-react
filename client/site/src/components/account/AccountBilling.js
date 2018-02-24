@@ -47,6 +47,7 @@ class AccountBilling extends Component {
           amount={35000}
           currency="SGD"
           email="mosufy+asd@gmail.com"
+          allowRememberMe={false}
         />
       </div>
     );

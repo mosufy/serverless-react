@@ -2,14 +2,18 @@ import * as sdk from "../lib/sdk";
 
 export const onStripeChargeTokenCallback = (token) => {
   return (dispatch) => {
-    console.log(token);
-
-    return sdk.pingTest()
+    return sdk.createCharge({
+      token: token,
+      charge: {
+        amount: 350,
+        currency: 'SGD',
+      }
+    })
       .then((res) => {
-        console.log('API is online');
+        console.log(res);
       })
       .catch((err) => {
-        console.log('Failed to connect to API');
+        console.log(err);
       })
   }
 };

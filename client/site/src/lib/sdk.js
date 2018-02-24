@@ -132,4 +132,4 @@ axios.interceptors.request.use(
 
 export const pingTest = () => sendRequest('/services/ping', GET, {}, authXAPIKey);
 
-export const createCharge = (token) => sendRequest('/billing/charge', POST, { token }, authXAPIKey);
+export const createCharge = params => sendRequest('/billing/charge', POST, params, authXAPIKey);
