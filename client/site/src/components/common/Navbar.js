@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Button } from "react-bootstrap";
 
 class Navbar extends Component {
   state = {
@@ -12,12 +13,23 @@ class Navbar extends Component {
     })
   };
 
+  toggleLoginNavbar() {
+    // this.setState({
+    //   displayCollapsedNavbar: this.state.displayCollapsedNavbar !== true
+    // });
+    this.props.handleLoginButtonOnClick();
+  }
+
   render() {
     let { displayCollapsedNavbar } = this.state;
 
     return (
       <nav className="navbar navbar-custom fixed-top">
         <div className="container">
+          <div className="collapse navbar-collapse" style={{ float: "right", margin: 8 + "px" }}>
+            <Button onClick={() => this.toggleLoginNavbar()} bsStyle="danger">Login</Button>
+          </div>
+
           <div className="navbar-header">
             <button type="button" className="navbar-toggle" onClick={() => this.toggleNavbar()}>
               <span className="sr-only">Toggle navigation</span>
@@ -38,6 +50,9 @@ class Navbar extends Component {
               </li>
               <li>
                 <a href="#contact" onClick={() => this.toggleNavbar()}>Contact</a>
+              </li>
+              <li>
+                <Button onClick={() => this.toggleLoginNavbar()} style={displayCollapsedNavbar ? {} : { display: "none" }}>Login</Button>
               </li>
             </ul>
           </div>

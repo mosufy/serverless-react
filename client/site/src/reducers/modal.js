@@ -1,5 +1,6 @@
 let initialState = {
-  registerInterestModal: false
+  registerInterestModal: false,
+  loginModal: false,
 };
 
 const modal = (state = initialState, action) => {
@@ -8,6 +9,11 @@ const modal = (state = initialState, action) => {
       return {
         ...state,
         registerInterestModal: state.registerInterestModal !== true,
+      };
+    case 'TOGGLE_LOGIN_MODAL':
+      return {
+        ...state,
+        loginModal: state.loginModal !== true,
       };
     default:
       return state;

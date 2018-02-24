@@ -6,12 +6,20 @@ import HomeContainer from "../containers/HomeContainer";
 import AuthContainer from "../containers/AuthContainer";
 import Error404Container from "../containers/Error404Container";
 import Footer from "./common/Footer";
+import LoginModal from "../components/modal/LoginModal";
 
 class App extends Component {
   render() {
+    let {
+      showLoginModal,
+      handleLoginModalOnClick,
+      handleLoginOnSubmit,
+      formStatus,
+    } = this.props;
+
     return (
       <div>
-        <Navbar/>
+        <Navbar handleLoginButtonOnClick={handleLoginModalOnClick}/>
 
         <Switch>
           <Route exact path="/" component={HomeContainer}/>
@@ -21,6 +29,10 @@ class App extends Component {
         </Switch>
 
         <div className="container">
+          <LoginModal showModal={showLoginModal}
+                      handleModalOnClick={handleLoginModalOnClick}
+                      handleModalOnSubmit={handleLoginOnSubmit}
+                      formStatus={formStatus}/>
           <Footer/>
         </div>
       </div>

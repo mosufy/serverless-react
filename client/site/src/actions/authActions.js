@@ -1,5 +1,5 @@
 import * as sdk from '../lib/sdk';
-import { signupCognitoUser, confirmCognitoUser } from "../lib/aws";
+import { signupCognitoUser, confirmCognitoUser, loginCognitoUser } from "../lib/aws";
 import { showError, showSuccess, dismissAlert } from "./formActions";
 
 export const signup = (values) => {
@@ -30,6 +30,21 @@ export const pingTest = () => {
 
 export const confirmUser = (username, confirmationCode) => {
   return (dispatch) => {
-    return confirmCognitoUser(username , confirmationCode);
+    return confirmCognitoUser(username, confirmationCode);
+  }
+};
+
+export const login = (values) => {
+  return (dispatch) => {
+    dispatch(dismissAlert());
+
+    return loginCognitoUser(values)
+      .then((res) => {
+        //history.push('/account');
+        console.log(res);
+      })
+      .catch((err) => {
+        dispatch(showError(err.code, err.message));
+      });
   }
 };

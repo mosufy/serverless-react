@@ -15,3 +15,8 @@ export const checkboxRequired = (val) => {
   if (val === true || val === 'true') return null;
   else return `Please agree to the Terms of Service to continue.`;
 };
+
+export const required = (val) => {
+  if (val.length === 0) return `This field is required`;
+  else return null;
+};

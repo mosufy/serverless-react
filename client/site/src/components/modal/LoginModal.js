@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Modal, Alert } from "react-bootstrap";
 import ButtonLoader from "react-bootstrap-button-loader";
 
-import { minField, emailFormat, checkboxRequired } from "../../lib/formValidation";
-import RegisterInterestModalForm from "./RegisterInterestModalForm";
+import { emailFormat, required } from "../../lib/formValidation";
+import LoginModalForm from "./LoginModalForm";
 
-class RegisterInterestModal extends Component {
+class LoginModal extends Component {
   constructor(props, context) {
     super(props, context);
 
@@ -14,11 +14,8 @@ class RegisterInterestModal extends Component {
 
     this.state = {
       formFields: {
-        firstName: '',
-        lastName: '',
         email: '',
         password: '',
-        agree: false,
       },
       formError: {},
       formErrorMessage: null,
@@ -40,10 +37,6 @@ class RegisterInterestModal extends Component {
   }
 
   handleChange(e) {
-    if (e.target.type === 'checkbox') {
-      e.target.value = e.target.checked;
-    }
-
     let nextState = Object.assign({}, this.state, {
       formFields: {
         ...this.state.formFields,
@@ -86,23 +79,22 @@ class RegisterInterestModal extends Component {
       <Modal show={showModal} onHide={handleModalOnClick} bsStyle="primary">
         <form onSubmit={this.handleSubmit}>
           <Modal.Header closeButton>
-            <Modal.Title>Register Your Interest</Modal.Title>
+            <Modal.Title>Login</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             {(formSuccessMessage || formErrorMessage) &&
             <Alert bsStyle={formSuccessMessage ? 'success' : 'danger'}>{formSuccessMessage || formErrorMessage}</Alert>}
 
-            <h4>Create an account with us to register your interest</h4>
-            <p>By creating an account, you can manage your schedules and arrange to make automatic future payments!</p>
+            <h4>Manage Your Account</h4>
+            <p>Access your account, settings and payment details.</p>
 
-            {!formSuccessMessage &&
-            <RegisterInterestModalForm formError={formError} formSubmitting={formSubmitting} handleChange={this.handleChange}/>}
+            <LoginModalForm formError={formError} formSubmitting={formSubmitting} handleChange={this.handleChange}/>
 
           </Modal.Body>
 
           {!formSuccessMessage &&
           <Modal.Footer>
-            <ButtonLoader type="submit" bsStyle="danger" loading={formSubmitting}>Submit</ButtonLoader>
+            <ButtonLoader type="submit" bsStyle="danger" loading={formSubmitting}>Login</ButtonLoader>
           </Modal.Footer>}
         </form>
       </Modal>
@@ -125,18 +117,11 @@ const validateFormField = (state, formGroupName = null) => {
     const formValue = state.formFields[validateFields[i]];
 
     switch (formGroupName) {
-      case 'firstName':
-      case 'lastName':
-        res = minField(formValue, 3);
-        break;
-      case 'password':
-        res = minField(formValue, 6);
-        break;
       case 'email':
         res = emailFormat(formValue);
         break;
-      case 'agree':
-        res = checkboxRequired(formValue);
+      case 'password':
+        res = required(formValue);
         break;
       default:
         res = null;
@@ -150,4 +135,4 @@ const validateFormField = (state, formGroupName = null) => {
   }
 };
 
-export default RegisterInterestModal;
+export default LoginModal;
