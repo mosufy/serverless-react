@@ -37,14 +37,16 @@ export const confirmUser = (username, confirmationCode) => {
 };
 
 export const login = (values) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
     dispatch(dismissAlert());
+
+    const { from } = getState().router.location.state || { from: { pathname: "/" } };
 
     return loginCognitoUser(values)
       .then((res) => {
         dispatch(storeAuthenticated());
         dispatch(toggleLoginModal());
-        history.push('/account');
+        history.push(from.pathname);
       })
       .catch((err) => {
         dispatch(showError(err.code, err.message));

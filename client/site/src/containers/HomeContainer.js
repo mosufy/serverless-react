@@ -3,10 +3,18 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import Home from './../components/home/Home';
-import { toggleRegisterInterestModal } from "../actions/modalActions";
+import { toggleLoginModal, toggleRegisterInterestModal } from "../actions/modalActions";
 import { signup } from "../actions/authActions";
 
 class HomeContainer extends Component {
+  componentDidMount() {
+    const { showLogin } = this.props.location.state || { showLogin: false };
+
+    if (showLogin) {
+      this.props.showLoginModal();
+    }
+  }
+
   render() {
     return <Home {...this.props} />;
   }
@@ -26,6 +34,9 @@ const mapDispatchToProps = dispatch => {
     },
     handleRegisterInterestOnSubmit(formValues) {
       dispatch(signup(formValues));
+    },
+    showLoginModal() {
+      dispatch(toggleLoginModal(true));
     }
   }
 };

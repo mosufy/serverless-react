@@ -4,8 +4,11 @@ export const toggleRegisterInterestModal = () => {
   }
 };
 
-export const toggleLoginModal = () => {
+export const toggleLoginModal = (toOpen = null) => {
   return {
     type: 'TOGGLE_LOGIN_MODAL',
+    payload: {
+      toOpen
+    },
   }
 };

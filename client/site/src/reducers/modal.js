@@ -11,10 +11,17 @@ const modal = (state = initialState, action) => {
         registerInterestModal: state.registerInterestModal !== true,
       };
     case 'TOGGLE_LOGIN_MODAL':
-      return {
-        ...state,
-        loginModal: state.loginModal !== true,
-      };
+      if (action.payload.toOpen !== null) {
+        return {
+          ...state,
+          loginModal: action.payload.toOpen,
+        };
+      } else {
+        return {
+          ...state,
+          loginModal: state.loginModal !== true,
+        };
+      }
     default:
       return state;
   }
