@@ -43,5 +43,7 @@
   },
   "author": "mosufy <mosufy@gmail.com>",
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "stripe": "^5.5.0"
+  }
 }

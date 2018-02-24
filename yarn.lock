@@ -3333,6 +3333,10 @@ qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
 
+qs@~6.5.1:
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
+
 querystring-es3@^0.2.0, querystring-es3@~0.2.0:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
@@ -3850,6 +3854,15 @@ strip-eof@^1.0.0:
 strip-json-comments@^2.0.0, strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
+
+stripe@^5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-5.5.0.tgz#df5fefae440531ae2a0051f91c7837457ba06717"
+  dependencies:
+    bluebird "^3.5.0"
+    lodash.isplainobject "^4.0.6"
+    qs "~6.5.1"
+    safe-buffer "^5.1.1"
 
 subarg@^1.0.0:
   version "1.0.0"

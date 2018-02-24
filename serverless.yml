@@ -21,6 +21,7 @@ provider:
   environment:
     STAGE: ${self:custom.stage}
     SITELINK: ${self:custom.app.siteLink.${self:custom.stage}}
+    STRIPE_SECRET_KEY: ${opt:stripe-secret}
 
 custom:
   defaultStage: dev
@@ -56,6 +57,15 @@ functions:
         - cognitoUserPool:
             pool: SherTuitionUserPool
             trigger: CustomMessage
+  billingCreateCharge:
+      handler: src/app/handlers/billing.createCharge
+      description: Stripe create new charge
+      events:
+        - http:
+            path: billing/charge
+            method: post
+            private: true
+            cors: true
 
 resources:
   Resources:
