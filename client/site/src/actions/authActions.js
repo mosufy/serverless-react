@@ -1,6 +1,8 @@
 import * as sdk from '../lib/sdk';
-import { signupCognitoUser, confirmCognitoUser, loginCognitoUser } from "../lib/aws";
+import { signupCognitoUser, confirmCognitoUser, loginCognitoUser, getCurrentUser, logoutCognitoUser } from "../lib/aws";
 import { showError, showSuccess, dismissAlert } from "./formActions";
+import { toggleLoginModal } from "./modalActions";
+import { history } from "../store";
 
 export const signup = (values) => {
   return (dispatch) => {
@@ -40,11 +42,43 @@ export const login = (values) => {
 
     return loginCognitoUser(values)
       .then((res) => {
-        //history.push('/account');
-        console.log(res);
+        dispatch(storeAuthenticated());
+        dispatch(toggleLoginModal());
+        history.push('/account');
       })
       .catch((err) => {
         dispatch(showError(err.code, err.message));
       });
+  }
+};
+
+const storeAuthenticated = () => {
+  return {
+    type: 'STORE_AUTHENTICATED',
+  }
+};
+
+const removeAuthenticated = () => {
+  return {
+    type: 'REMOVE_AUTHENTICATED',
+  }
+};
+
+export const currentUser = () => {
+  return (dispatch) => {
+    let currentUser = getCurrentUser();
+    if (currentUser !== null) {
+      dispatch(storeAuthenticated());
+    } else {
+      dispatch(removeAuthenticated());
+    }
+  }
+};
+
+export const logout = () => {
+  return (dispatch) => {
+    logoutCognitoUser();
+    dispatch(removeAuthenticated());
+    history.push('/');
   }
 };

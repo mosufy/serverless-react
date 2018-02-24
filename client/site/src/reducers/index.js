@@ -4,6 +4,7 @@ import { routerReducer } from 'react-router-redux';
 import metadata from "./metadata";
 import modal from "./modal";
 import form from "./form";
+import auth from "./auth";
 
 // create reducer object
 const reducers = combineReducers({
@@ -11,6 +12,7 @@ const reducers = combineReducers({
   metadata,
   modal,
   form,
+  auth,
 });
 
 export default reducers;

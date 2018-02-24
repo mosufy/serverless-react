@@ -75,3 +75,16 @@ export const loginCognitoUser = (values) => {
     })
   );
 };
+
+export const getCurrentUser = () => {
+  const userPool = cognitoUserPool();
+  return userPool.getCurrentUser();
+};
+
+export const logoutCognitoUser = () => {
+  const currentUser = getCurrentUser();
+
+  if (currentUser !== null) {
+    currentUser.signOut();
+  }
+};

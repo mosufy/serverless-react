@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import Navbar from "./common/Navbar";
+import Navbar from "./common/Navibar";
 import HomeContainer from "../containers/HomeContainer";
 import AuthContainer from "../containers/AuthContainer";
 import Error404Container from "../containers/Error404Container";
+import AccountContainer from "../containers/account/AccountContainer";
 import Footer from "./common/Footer";
 import LoginModal from "../components/modal/LoginModal";
 
@@ -15,16 +16,19 @@ class App extends Component {
       handleLoginModalOnClick,
       handleLoginOnSubmit,
       formStatus,
+      auth,
+      handleLogoutOnClick,
     } = this.props;
 
     return (
       <div>
-        <Navbar handleLoginButtonOnClick={handleLoginModalOnClick}/>
+        <Navbar handleLoginButtonOnClick={handleLoginModalOnClick} auth={auth} handleLogoutOnClick={handleLogoutOnClick}/>
 
         <Switch>
           <Route exact path="/" component={HomeContainer}/>
           <Route path="/about" component={HomeContainer}/>
           <Route path="/auth/confirm-registration" component={AuthContainer}/>
+          <Route path="/account" component={AccountContainer}/>
           <Route component={Error404Container}/>
         </Switch>
 

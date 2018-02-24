@@ -4,9 +4,13 @@ import { withRouter } from 'react-router-dom';
 
 import App from './../components/App';
 import { toggleLoginModal } from "../actions/modalActions";
-import { login } from "../actions/authActions";
+import { login, currentUser, logout } from "../actions/authActions";
 
 class AppContainer extends Component {
+  componentDidMount() {
+    this.props.getCurrentUser();
+  }
+
   render() {
     return <App {...this.props} />;
   }
@@ -16,6 +20,7 @@ const mapStateToProps = state => {
   return {
     showLoginModal: state.modal.loginModal,
     formStatus: state.form,
+    auth: state.auth,
   }
 };
 
@@ -26,6 +31,12 @@ const mapDispatchToProps = dispatch => {
     },
     handleLoginOnSubmit(formValues) {
       dispatch(login(formValues));
+    },
+    getCurrentUser() {
+      dispatch(currentUser());
+    },
+    handleLogoutOnClick() {
+      dispatch(logout());
     }
   }
 };
