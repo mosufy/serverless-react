@@ -2,17 +2,23 @@ import axios from 'axios';
 import isEmpty from 'lodash.isempty';
 import { history } from "../store";
 
-import {GET, PUT, POST, authBearerToken, authBearerTokenNoCache, authBearerTokenMultipartFormData, authXAPIKey} from './constants';
+import {
+  GET,
+  PUT,
+  POST,
+  authBearerToken,
+  authBearerTokenNoCache,
+  authBearerTokenMultipartFormData,
+  authXAPIKey
+} from './constants';
 import appConfig from '../config';
 import store from '../store';
 
-const sendRequest = (
-  path = '/',
-  reqMethod = GET,
-  params = {},
-  type = authBearerToken,
-  bearerToken = null,
-) => {
+const sendRequest = (path = '/',
+                     reqMethod = GET,
+                     params = {},
+                     type = authBearerToken,
+                     bearerToken = null,) => {
   let paramType = 'params';
   let headers;
 
@@ -124,4 +130,6 @@ axios.interceptors.request.use(
   }
 );
 
-export const pingTest = () => sendRequest('/api/services/ping', GET, {}, authXAPIKey);
+export const pingTest = () => sendRequest('/services/ping', GET, {}, authXAPIKey);
+
+export const createCharge = (token) => sendRequest('/billing/charge', POST, { token }, authXAPIKey);

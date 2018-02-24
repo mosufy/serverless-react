@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import AccountBilling from "../../components/account/AccountBilling";
+import { onStripeChargeTokenCallback } from "../../actions/billingActions";
 
 class AccountBillingContainer extends Component {
   render() {
@@ -18,7 +19,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    //
+    onStripeCheckoutTokenCallback(token) {
+      dispatch(onStripeChargeTokenCallback(token));
+    }
   }
 };
 
