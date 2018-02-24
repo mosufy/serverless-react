@@ -14,9 +14,6 @@ class Navbar extends Component {
   };
 
   toggleLoginNavbar() {
-    // this.setState({
-    //   displayCollapsedNavbar: this.state.displayCollapsedNavbar !== true
-    // });
     this.props.handleLoginButtonOnClick();
   }
 
@@ -52,7 +49,7 @@ class Navbar extends Component {
                 <a href="#contact" onClick={() => this.toggleNavbar()}>Contact</a>
               </li>
               <li>
-                <Button onClick={() => this.toggleLoginNavbar()} style={displayCollapsedNavbar ? {} : { display: "none" }}>Login</Button>
+                <Button bsStyle="link" onClick={() => this.toggleLoginNavbar()} style={displayCollapsedNavbar ? {} : { display: "none" }}>Login</Button>
               </li>
             </ul>
           </div>

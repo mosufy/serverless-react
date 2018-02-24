@@ -92,10 +92,9 @@ class LoginModal extends Component {
 
           </Modal.Body>
 
-          {!formSuccessMessage &&
           <Modal.Footer>
             <ButtonLoader type="submit" bsStyle="danger" loading={formSubmitting}>Login</ButtonLoader>
-          </Modal.Footer>}
+          </Modal.Footer>
         </form>
       </Modal>
     );

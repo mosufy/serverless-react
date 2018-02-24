@@ -20,7 +20,7 @@ export default class RegisterInterestModalForm extends Component {
           </Col>
           <Col xs={12} md={6}>
             <FieldGroup id="lastName" type="text" label="Last Name" placeholder="Enter Last Name"
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                         validationError={formError.lastName}
                         disabled={formSubmitting}/>
           </Col>

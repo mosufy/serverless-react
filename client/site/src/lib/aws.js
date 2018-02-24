@@ -1,4 +1,4 @@
-import { CognitoUserPool, CognitoUserAttribute, CognitoUser } from "amazon-cognito-identity-js";
+import { CognitoUserPool, CognitoUserAttribute, CognitoUser, AuthenticationDetails } from "amazon-cognito-identity-js";
 
 import config from "../config";
 
@@ -58,4 +58,20 @@ export const confirmCognitoUser = (username, confirmationCode) => {
       }
     });
   });
+};
+
+export const loginCognitoUser = (values) => {
+  const userPool = cognitoUserPool();
+
+  const user = new CognitoUser({ Username: values.email, Pool: userPool });
+
+  const authenticationData = { Username: values.email, Password: values.password };
+  const authenticationDetails = new AuthenticationDetails(authenticationData);
+
+  return new Promise((resolve, reject) =>
+    user.authenticateUser(authenticationDetails, {
+      onSuccess: result => resolve(result),
+      onFailure: err => reject(err)
+    })
+  );
 };
