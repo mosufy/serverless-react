@@ -12,6 +12,7 @@ class AppContainer extends Component {
   }
 
   render() {
+    if (this.props.auth.isLoading) return null;
     return <App {...this.props} />;
   }
 }
@@ -21,6 +22,7 @@ const mapStateToProps = state => {
     showLoginModal: state.modal.loginModal,
     formStatus: state.form,
     auth: state.auth,
+    router: state.router,
   }
 };
 

@@ -40,7 +40,7 @@ export const login = (values) => {
   return (dispatch, getState) => {
     dispatch(dismissAlert());
 
-    const { from } = getState().router.location.state || { from: { pathname: "/" } };
+    const { from } = getState().router.location.state || { from: { pathname: "/account" } };
 
     return loginCognitoUser(values)
       .then((res) => {

@@ -8,9 +8,10 @@ import { signup } from "../actions/authActions";
 
 class HomeContainer extends Component {
   componentDidMount() {
-    const { showLogin } = this.props.location.state || { showLogin: false };
+    const params = new URLSearchParams(this.props.location.search);
+    const showLogin = params.get('login');
 
-    if (showLogin) {
+    if (showLogin === 'true') {
       this.props.showLoginModal();
     }
   }
