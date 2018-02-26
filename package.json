@@ -5,7 +5,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha --require babel-register",
     "test:coverage": "babel-node ./node_modules/.bin/isparta cover _mocha",
-    "server": "sls offline start",
+    "server": "sls offline start --stage local",
     "client": "cd client/site && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
     "build:site": "cd client/site && yarn build",

@@ -18,27 +18,21 @@ provider:
   region: ap-southeast-1
   apiKeys:
     - ${self:custom.stage}-serviceKey
-  environment:
-    STAGE: ${self:custom.stage}
-    SITELINK: ${self:custom.app.siteLink.${self:custom.stage}}
-    STRIPE_SECRET_KEY: ${opt:stripe-secret}
+  environment: ${self:custom.env}
 
 custom:
   defaultStage: dev
   stage: ${opt:stage, self:custom.defaultStage}
   profiles:
+    local: serverlessDevProfile
     dev: serverlessDevProfile
     prod: serverlessProdProfile
   serverless-offline:
     port: 3001
   client:
-    bucketName: ${opt:bucketName, 'sher.rapidstax.com'}
+    bucketName: ${opt:distributionFolder, self:custom.env.S3_BUCKET_NAME}
     distributionFolder: ${opt:distributionFolder, 'client/site/build'}
-  cognitoUserPoolName: ${self:custom.stage}-SherTuitionUserPool
-  app:
-    siteLink:
-      dev: "https://sher.rapidstax.com"
-      prod: "https://sher.rapidstax.com"
+  env: ${file(./env-${self:custom.stage}.yml)}
 
 functions:
   servicePing:
@@ -55,7 +49,7 @@ functions:
       description: Cognito user signup custom message trigger lambda function
       events:
         - cognitoUserPool:
-            pool: SherTuitionUserPool
+            pool: ${self:custom.env.COGNITO_USER_POOL_NAME}
             trigger: CustomMessage
   billingCreateCharge:
       handler: src/app/handlers/billing.createCharge
@@ -69,12 +63,12 @@ functions:
 
 resources:
   Resources:
-    CognitoUserPoolSherTuitionUserPool:
+    CognitoUserPool:
       Type: "AWS::Cognito::UserPool"
       Properties:
-        UserPoolName: ${self:custom.stage}-SherTuitionUserPool
+        UserPoolName: ${self:custom.env.COGNITO_USER_POOL_NAME}
         EmailConfiguration:
-          ReplyToEmailAddress: "no-reply@shertuition.com"
+          ReplyToEmailAddress: ${self:custom.env.SES_MAIL_REPLY_TO}
         Schema:
           - AttributeDataType: String
             Mutable: True
@@ -87,12 +81,12 @@ resources:
             RequireNumbers: False
             RequireSymbols: False
             RequireUppercase: False
-    CognitoUserPoolClientSherTuitionUserPoolClientWebapp:
+    CognitoUserPoolClientWebapp:
       Type: "AWS::Cognito::UserPoolClient"
       Properties:
-        ClientName: SherTuitionUserPoolClientWebapp
+        ClientName: ${self:custom.env.COGNITO_USER_POOL_CLIENT_NAME_WEBAPP}
         UserPoolId:
-          Ref: CognitoUserPoolSherTuitionUserPool
+          Ref: CognitoUserPool
         WriteAttributes:
           - email
           - family_name
