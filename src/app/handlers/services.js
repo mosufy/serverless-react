@@ -5,7 +5,17 @@ export const ping = (event, context, callback) => {
   let service = new Service();
 
   return new Promise((resolve) => {
-    callback(null, response(event, service.ping()));
-    resolve();
+    let resPing = service.ping();
+
+    return service.pingDb()
+      .then(resPingDb => {
+        let res = {
+          ping: resPing,
+          pingDb: resPingDb,
+        };
+
+        callback(null, response(event, res));
+        resolve();
+      });
   });
 };
