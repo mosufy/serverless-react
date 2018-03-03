@@ -14,11 +14,24 @@ provider:
   name: aws
   runtime: nodejs6.10
   stage: ${opt:stage, self:custom.defaultStage}
+  memorySize: 128
+  timeout: 3
+  reservedConcurrency: 10
   profile: ${self:custom.profiles.${self:provider.stage}}
   region: ap-southeast-1
   apiKeys:
     - ${self:custom.stage}-serviceKey
   environment: ${self:custom.env}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_USER}"
 
 custom:
   defaultStage: dev
@@ -38,6 +51,8 @@ functions:
   servicePing:
     handler: src/app/handlers/services.ping
     description: Service online availability test
+    timeout: 1
+    reservedConcurrency: 5
     events:
       - http:
           path: services/ping
@@ -47,10 +62,8 @@ functions:
   cognitoCustomMessage:
       handler: src/app/handlers/awsCognito.customMessage
       description: Cognito user signup custom message trigger lambda function
-      events:
-        - cognitoUserPool:
-            pool: ${self:custom.env.COGNITO_USER_POOL_NAME}
-            trigger: CustomMessage
+      timeout: 1
+      memorySize: 256
   billingCreateCharge:
       handler: src/app/handlers/billing.createCharge
       description: Stripe create new charge
@@ -63,7 +76,7 @@ functions:
 
 resources:
   Resources:
-    CognitoUserPool:
+    CognitoUserPoolReactServerlessUserPool:
       Type: "AWS::Cognito::UserPool"
       Properties:
         UserPoolName: ${self:custom.env.COGNITO_USER_POOL_NAME}
@@ -81,14 +94,31 @@ resources:
             RequireNumbers: False
             RequireSymbols: False
             RequireUppercase: False
-    CognitoUserPoolClientWebapp:
+        LambdaConfig:
+          CustomMessage:
+            Fn::GetAtt: ["CognitoCustomMessageLambdaFunction", "Arn"]
+    CognitoUserPoolClientReactServerlessUserPoolClientWebapp:
       Type: "AWS::Cognito::UserPoolClient"
       Properties:
         ClientName: ${self:custom.env.COGNITO_USER_POOL_CLIENT_NAME_WEBAPP}
         UserPoolId:
-          Ref: CognitoUserPool
+          Ref: CognitoUserPoolReactServerlessUserPool
         WriteAttributes:
           - email
           - family_name
           - given_name
           - phone_number
+    DynamoDbUsersTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE_USER}

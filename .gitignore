@@ -34,5 +34,9 @@ yarn-error.log*
 # Istanbul code coverage
 coverage
 
+# References to DOTenv files
 .env.*.local
 env-*.yml
+
+# Generated from serverless-optimize plugin
+/_optimize
