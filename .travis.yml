@@ -9,4 +9,3 @@ cache:
 
 script:
   - npm install -g serverless
-  - sls offline start --stage test
