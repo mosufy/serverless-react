@@ -1,0 +1,15 @@
+language: node_js
+
+node_js:
+- node
+
+install:
+  - npm install -g codecov
+
+cache:
+  directories:
+    - node_modules
+
+script:
+  - npm install -g serverless
+  - npm run test:coverage && codecov

@@ -1,0 +1,66 @@
+body {
+  margin-top: 60px; /* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+.header-image {
+  background: url("../img/hero.jpg") no-repeat center center scroll;
+}
+
+.headline {
+  padding: 200px 0;
+  font-family: 'Shadows Into Light', cursive;
+}
+
+.headline h1 {
+  font-weight: bold;
+}
+
+.fixed-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+}
+
+.navbar-custom {
+  padding-top: 1rem;
+  background-color: rgba(255,255,255,.7);
+}
+
+.navbar-custom .navbar-brand {
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+  font-weight: 700;
+}
+
+.navbar-nav a {
+  color: rgba(0,0,0,.5);
+}
+
+.navbar-dark .navbar-nav li:hover {
+  background-color: #ffffff;
+}
+
+.navbar-toggle .icon-bar {
+  background-color: rgba(0,0,0,.5);
+}
+
+.navbar-collapse .in {
+  margin-top: 15px;
+}
+
+.modal-dialog { /* Vertically align modal */
+  position: absolute;
+  top: 0%;
+  transform: translate(0, -0%) !important;
+}
+
+@media(min-width:737px) {
+  .modal-dialog { /* Vertically align modal */
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%) !important;
+  }
+}

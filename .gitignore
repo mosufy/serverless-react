@@ -10,3 +10,34 @@ jspm_packages
 
 # PHPStorm
 .idea
+
+# testing
+/coverage
+
+# production
+/build
+/client/site/build
+/client/admin/build
+/client/account/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Istanbul code coverage
+coverage
+
+# References to DOTenv files
+.env.*.local
+env-*.yml
+!env-test.yml
+
+# Generated from serverless-optimize plugin
+/_optimize

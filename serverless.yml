@@ -4,30 +4,147 @@ service:
 plugins:
   - serverless-webpack
   - serverless-offline
+  - serverless-finch
+  - serverless-plugin-optimize
+
+package:
+  individually: true
 
 provider:
   name: aws
   runtime: nodejs6.10
   stage: ${opt:stage, self:custom.defaultStage}
+  memorySize: 128
+  timeout: 3
+  reservedConcurrency: 10
   profile: ${self:custom.profiles.${self:provider.stage}}
   region: ap-southeast-1
   apiKeys:
-    - ${opt:stage, self:custom.defaultStage}-serviceKey
+    - ${self:custom.stage}-serviceKey
+  environment: ${self:custom.env}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_USER}"
 
 custom:
   defaultStage: dev
+  stage: ${opt:stage, self:custom.defaultStage}
   profiles:
+    local: serverlessDevProfile
     dev: serverlessDevProfile
     prod: serverlessProdProfile
   serverless-offline:
     port: 3001
+  client:
+    bucketName: ${opt:distributionFolder, self:custom.env.S3_BUCKET_NAME}
+    distributionFolder: ${opt:distributionFolder, 'client/site/build'}
+  env: ${file(./env-${self:custom.stage}.yml)}
 
 functions:
   servicePing:
-    handler: api/src/services.ping
+    handler: src/app/handlers/services/ping.handler
     description: Service online availability test
+    timeout: 1
+    reservedConcurrency: 5
     events:
       - http:
           path: services/ping
           method: get
           private: true
+          cors: true
+  cognitoCustomMessage:
+      handler: src/app/handlers/awsCognito/customMessage.handler
+      description: Cognito user signup custom message trigger lambda function
+      timeout: 1
+      memorySize: 256
+  cognitoPostConfirmation:
+      handler: src/app/handlers/awsCognito/postConfirmation.handler
+      description: Cognito user signup post confirmation trigger lambda function
+      memorySize: 1024
+  billingCreateCharge:
+      handler: src/app/handlers/billing/createCharge.handler
+      description: Stripe create new charge
+      events:
+        - http:
+            path: billing/charge
+            method: post
+            private: true
+            cors: true
+
+resources:
+  Resources:
+    CognitoUserPoolReactServerlessUserPool:
+      Type: "AWS::Cognito::UserPool"
+      Properties:
+        UserPoolName: ${self:custom.env.COGNITO_USER_POOL_NAME}
+        EmailConfiguration:
+          ReplyToEmailAddress: ${self:custom.env.SES_MAIL_REPLY_TO}
+        AutoVerifiedAttributes:
+          - email
+        Schema:
+          - AttributeDataType: String
+            Mutable: True
+            Name: email
+            Required: True
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+            RequireLowercase: False
+            RequireNumbers: False
+            RequireSymbols: False
+            RequireUppercase: False
+        LambdaConfig:
+          CustomMessage:
+            Fn::GetAtt: ["CognitoCustomMessageLambdaFunction", "Arn"]
+          PostConfirmation:
+            Fn::GetAtt: ["CognitoPostConfirmationLambdaFunction", "Arn"]
+    CognitoUserPoolClientReactServerlessUserPoolClientWebapp:
+      Type: "AWS::Cognito::UserPoolClient"
+      Properties:
+        ClientName: ${self:custom.env.COGNITO_USER_POOL_CLIENT_NAME_WEBAPP}
+        UserPoolId:
+          Ref: CognitoUserPoolReactServerlessUserPool
+        WriteAttributes:
+          - email
+          - family_name
+          - given_name
+          - phone_number
+    CognitoCustomMessageLambdaPermissionCognitoUserPool:
+      Type: "AWS::Lambda::Permission"
+      Properties:
+        FunctionName:
+          Fn::GetAtt: ["CognitoCustomMessageLambdaFunction", "Arn"]
+        Action: "lambda:InvokeFunction"
+        Principal: "cognito-idp.amazonaws.com"
+        SourceArn:
+          Fn::Join: ["", ["arn:aws:cognito-idp:${self:provider.region}:", {Ref: "AWS::AccountId"}, ":userpool/", {Ref: CognitoUserPoolReactServerlessUserPool}]]
+    CognitoPostConfirmationLambdaPermissionCognitoUserPool:
+      Type: "AWS::Lambda::Permission"
+      Properties:
+        FunctionName:
+          Fn::GetAtt: ["CognitoPostConfirmationLambdaFunction", "Arn"]
+        Action: "lambda:InvokeFunction"
+        Principal: "cognito-idp.amazonaws.com"
+        SourceArn:
+          Fn::Join: ["", ["arn:aws:cognito-idp:${self:provider.region}:", {Ref: "AWS::AccountId"}, ":userpool/", {Ref: CognitoUserPoolReactServerlessUserPool}]]
+    DynamoDbUsersTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE_USER}
