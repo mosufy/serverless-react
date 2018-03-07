@@ -9,5 +9,9 @@ install:
   - npm install -g serverless
   - yarn install
 
+cache:
+  directories:
+    - node_modules
+
 script:
   - yarn test:coverage && codecov
