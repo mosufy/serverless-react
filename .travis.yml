@@ -9,4 +9,4 @@ cache:
 
 script:
   - npm install -g serverless
-  - npm test:coverage && codecov
+  - npm run test:coverage && codecov
