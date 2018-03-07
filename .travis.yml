@@ -5,11 +5,12 @@ node_js:
 
 install:
   - npm install -g codecov
+  - npm install -g serverless
+  - yarn install
 
 cache:
   directories:
     - node_modules
 
 script:
-  - npm install -g serverless
-  - npm run test:coverage && codecov
+  - yarn test:coverage && codecov
