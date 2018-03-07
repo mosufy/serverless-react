@@ -1,5 +1,6 @@
 import { response, error } from "../../common";
 
+/* istanbul ignore next */
 export const handler = (event, context, callback) => {
   ping()
     .then(res => callback(null, response(event, res)))
