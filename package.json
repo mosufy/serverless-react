@@ -4,7 +4,7 @@
   "description": "Serverless webpack example using ecma script",
   "scripts": {
     "test": "./node_modules/.bin/mocha --require babel-register",
-    "test:coverage": "npx babel-node ./node_modules/.bin/isparta cover _mocha",
+    "test:coverage": "babel-node ./node_modules/.bin/isparta cover _mocha",
     "server": "sls offline start --stage local",
     "client": "cd client/site && yarn start",
     "dev": "concurrently --kill-others-on-fail \"yarn server\" \"yarn client\"",
