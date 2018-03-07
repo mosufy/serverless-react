@@ -37,6 +37,7 @@ coverage
 # References to DOTenv files
 .env.*.local
 env-*.yml
+!env-test.yml
 
 # Generated from serverless-optimize plugin
 /_optimize
