@@ -1,5 +1,9 @@
 # Serverless React
 
+[![serverless](http://public.serverless.com/badges/v3.svg)](http://www.serverless.com)
+[![Build Status](https://travis-ci.org/mosufy/serverless-react.svg?branch=master)](https://travis-ci.org/mosufy/serverless-react)
+[![codecov](https://codecov.io/gh/mosufy/serverless-react/branch/master/graph/badge.svg)](https://codecov.io/gh/mosufy/serverless-react)
+
 Example web app with Serverless Framework and React.
 
 ## Run Local Environment
