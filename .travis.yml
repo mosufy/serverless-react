@@ -9,5 +9,4 @@ cache:
 
 script:
   - npm install -g serverless
-  - npm test
-  - babel-node ./node_modules/.bin/isparta cover _mocha --report lcovonly -- -R spec && codecov
+  - npm test:coverage && codecov
