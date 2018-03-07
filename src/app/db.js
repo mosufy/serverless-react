@@ -1,11 +1,22 @@
-import dbconnect from "./dbconnect";
+import AWS from 'aws-sdk';
+import isEmpty from 'lodash.isempty';
 
-export const pingTest = () => {
-  const db = new dbconnect();
+const dynamo = new AWS.DynamoDB.DocumentClient();
 
+export const get = (params) => {
   return new Promise((resolve, reject) => {
-    db.client.query(db.q.Concat(["Hello", "World"], " "))
-      .then(res => (resolve(res)))
-      .catch(err => (reject(err)));
+    dynamo.get(params, (err, data) => {
+      if (err) return reject(err);
+      else return resolve(data);
+    });
+  });
+};
+
+export const put = (params) => {
+  return new Promise((resolve, reject) => {
+    dynamo.put(params, (err, data) => {
+      if (err) return reject(err);
+      else return resolve(isEmpty(data) ? params : data);
+    });
   });
 };

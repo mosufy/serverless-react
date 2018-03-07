@@ -1,27 +1,14 @@
 import chai from "chai";
+import chaiAsPromised from "chai-as-promised";
 
-import Service from '../src/app/repositories/Service';
+import { ping } from '../src/app/handlers/services/ping';
 
-import config from '../src/config';
+chai.use(chaiAsPromised);
 
 let assert = chai.assert;
 
 describe('Service tests', () => {
-  let service;
-
-  beforeEach(() => {
-    service = new Service;
-  });
-
   it('ping test', () => {
-    assert.equal(service.ping(), "Pong");
+    return assert.eventually.equal(ping(), "Pong");
   });
-
-  // TODO: unit testing for fauna db
-  // it('pingDb test', (done) => {
-  //   service.pingDb().then(res => {
-  //     assert.equal(res, 'Hello World');
-  //     done();
-  //   })
-  // });
 });

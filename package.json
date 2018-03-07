@@ -32,6 +32,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.24.1",
     "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
     "concurrently": "^3.5.1",
     "isparta": "^4.0.0",
     "istanbul": "^0.4.5",
@@ -41,7 +42,6 @@
     "serverless-offline": "^3.17.0",
     "serverless-plugin-optimize": "^3.0.4-rc.1",
     "serverless-webpack": "^3.1.1",
-    "uuid": "^3.2.1",
     "webpack": "^3.3.0"
   },
   "author": "mosufy <mosufy@gmail.com>",
