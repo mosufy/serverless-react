@@ -86,6 +86,8 @@ resources:
         UserPoolName: ${self:custom.env.COGNITO_USER_POOL_NAME}
         EmailConfiguration:
           ReplyToEmailAddress: ${self:custom.env.SES_MAIL_REPLY_TO}
+        AutoVerifiedAttributes:
+          - email
         Schema:
           - AttributeDataType: String
             Mutable: True
@@ -114,6 +116,24 @@ resources:
           - family_name
           - given_name
           - phone_number
+    CognitoCustomMessageLambdaPermissionCognitoUserPool:
+      Type: "AWS::Lambda::Permission"
+      Properties:
+        FunctionName:
+          Fn::GetAtt: ["CognitoCustomMessageLambdaFunction", "Arn"]
+        Action: "lambda:InvokeFunction"
+        Principal: "cognito-idp.amazonaws.com"
+        SourceArn:
+          Fn::Join: ["", ["arn:aws:cognito-idp:${self:provider.region}:", {Ref: "AWS::AccountId"}, ":userpool/", {Ref: CognitoUserPoolReactServerlessUserPool}]]
+    CognitoPostConfirmationLambdaPermissionCognitoUserPool:
+      Type: "AWS::Lambda::Permission"
+      Properties:
+        FunctionName:
+          Fn::GetAtt: ["CognitoPostConfirmationLambdaFunction", "Arn"]
+        Action: "lambda:InvokeFunction"
+        Principal: "cognito-idp.amazonaws.com"
+        SourceArn:
+          Fn::Join: ["", ["arn:aws:cognito-idp:${self:provider.region}:", {Ref: "AWS::AccountId"}, ":userpool/", {Ref: CognitoUserPoolReactServerlessUserPool}]]
     DynamoDbUsersTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
