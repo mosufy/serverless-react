@@ -18,6 +18,7 @@ class App extends Component {
       formStatus,
       auth,
       handleLogoutOnClick,
+      handleRegisterInterestModalOnClick,
     } = this.props;
 
     return (
@@ -36,6 +37,7 @@ class App extends Component {
           <LoginModal showModal={showLoginModal}
                       handleModalOnClick={handleLoginModalOnClick}
                       handleModalOnSubmit={handleLoginOnSubmit}
+                      handleRegisterInterestModalOnClick={handleRegisterInterestModalOnClick}
                       formStatus={formStatus}/>
           <Footer/>
         </div>

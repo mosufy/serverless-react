@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import App from './../components/App';
-import { toggleLoginModal } from "../actions/modalActions";
+import { toggleLoginModal, toggleRegisterInterestModal } from "../actions/modalActions";
 import { login, currentUser, logout } from "../actions/authActions";
+import { dismissAlert } from "../actions/formActions";
 
 class AppContainer extends Component {
   componentDidMount() {
@@ -30,6 +31,7 @@ const mapDispatchToProps = dispatch => {
   return {
     handleLoginModalOnClick() {
       dispatch(toggleLoginModal());
+      dispatch(dismissAlert());
     },
     handleLoginOnSubmit(formValues) {
       dispatch(login(formValues));
@@ -39,6 +41,11 @@ const mapDispatchToProps = dispatch => {
     },
     handleLogoutOnClick() {
       dispatch(logout());
+    },
+    handleRegisterInterestModalOnClick() {
+      dispatch(toggleLoginModal(false));
+      dispatch(dismissAlert());
+      dispatch(toggleRegisterInterestModal());
     }
   }
 };

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, Alert } from "react-bootstrap";
+import { Modal, Alert, Button } from "react-bootstrap";
 import ButtonLoader from "react-bootstrap-button-loader";
 
 import { emailFormat, required } from "../../lib/formValidation";
@@ -30,6 +30,12 @@ class LoginModal extends Component {
         this.setState({
           formErrorMessage: nextProps.formStatus.alert.type === 'error' ? nextProps.formStatus.alert.message : null,
           formSuccessMessage: nextProps.formStatus.alert.type === 'success' ? nextProps.formStatus.alert.message : null,
+          formSubmitting: false,
+        })
+      } else {
+        this.setState({
+          formErrorMessage: null,
+          formSuccessMessage: null,
           formSubmitting: false,
         })
       }
@@ -72,11 +78,11 @@ class LoginModal extends Component {
   }
 
   render() {
-    let { showModal, handleModalOnClick } = this.props;
+    let { showModal, handleModalOnClick, handleRegisterInterestModalOnClick } = this.props;
     let { formErrorMessage, formError, formSuccessMessage, formSubmitting } = this.state;
 
     return (
-      <Modal show={showModal} onHide={handleModalOnClick} bsStyle="primary">
+      <Modal show={showModal} onHide={handleModalOnClick} bsStyle="primary" backdrop="static">
         <form onSubmit={this.handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>Login</Modal.Title>
@@ -93,6 +99,7 @@ class LoginModal extends Component {
           </Modal.Body>
 
           <Modal.Footer>
+            <Button bsStyle="default" onClick={handleRegisterInterestModalOnClick}>Register Interest</Button>
             <ButtonLoader type="submit" bsStyle="danger" loading={formSubmitting}>Login</ButtonLoader>
           </Modal.Footer>
         </form>

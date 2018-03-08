@@ -83,7 +83,7 @@ class RegisterInterestModal extends Component {
     let { formErrorMessage, formError, formSuccessMessage, formSubmitting } = this.state;
 
     return (
-      <Modal show={showModal} onHide={handleModalOnClick} bsStyle="primary">
+      <Modal show={showModal} onHide={handleModalOnClick} bsStyle="primary" backdrop="static">
         <form onSubmit={this.handleSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>Register Your Interest</Modal.Title>
