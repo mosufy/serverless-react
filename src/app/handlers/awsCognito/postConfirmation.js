@@ -31,7 +31,7 @@ const insertUser = (event) => {
 
 const dbInsertUser = (userData) => {
   let params = Object.assign({
-    TableName: config.dynamodb.USER_TABLE,
+    TableName: config.dynamodb.USERS_TABLE,
   }, {
     Item: userData,
   });

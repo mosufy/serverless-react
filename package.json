@@ -42,6 +42,7 @@
     "serverless-offline": "^3.17.0",
     "serverless-plugin-optimize": "^3.0.4-rc.1",
     "serverless-webpack": "^3.1.1",
+    "uuid": "^3.2.1",
     "webpack": "^3.3.0"
   },
   "author": "mosufy <mosufy@gmail.com>",

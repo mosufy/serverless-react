@@ -25,13 +25,16 @@ provider:
   iamRoleStatements:
     - Effect: Allow
       Action:
-        - dynamodb:Query
-        - dynamodb:Scan
         - dynamodb:GetItem
         - dynamodb:PutItem
         - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE_USER}"
+      Resource:
+        - Fn::GetAtt: ["DynamoDbUsersTable", "Arn"]
+    - Effect: Allow
+      Action:
+        - dynamodb:PutItem
+      Resource:
+        - Fn::GetAtt: ["DynamoDbAuthLogsTable", "Arn"]
 
 custom:
   defaultStage: dev
@@ -67,6 +70,10 @@ functions:
   cognitoPostConfirmation:
       handler: src/app/handlers/awsCognito/postConfirmation.handler
       description: Cognito user signup post confirmation trigger lambda function
+      memorySize: 1024
+  cognitoPostAuthentication:
+      handler: src/app/handlers/awsCognito/postAuthentication.handler
+      description: Cognito user logged in post authentication trigger lambda function
       memorySize: 1024
   billingCreateCharge:
       handler: src/app/handlers/billing/createCharge.handler
@@ -105,6 +112,8 @@ resources:
             Fn::GetAtt: ["CognitoCustomMessageLambdaFunction", "Arn"]
           PostConfirmation:
             Fn::GetAtt: ["CognitoPostConfirmationLambdaFunction", "Arn"]
+          PostAuthentication:
+            Fn::GetAtt: ["CognitoPostAuthenticationLambdaFunction", "Arn"]
     CognitoUserPoolClientReactServerlessUserPoolClientWebapp:
       Type: "AWS::Cognito::UserPoolClient"
       Properties:
@@ -134,10 +143,46 @@ resources:
         Principal: "cognito-idp.amazonaws.com"
         SourceArn:
           Fn::Join: ["", ["arn:aws:cognito-idp:${self:provider.region}:", {Ref: "AWS::AccountId"}, ":userpool/", {Ref: CognitoUserPoolReactServerlessUserPool}]]
+    CognitoPostAuthenticationLambdaPermissionCognitoUserPool:
+      Type: "AWS::Lambda::Permission"
+      Properties:
+        FunctionName:
+          Fn::GetAtt: ["CognitoPostAuthenticationLambdaFunction", "Arn"]
+        Action: "lambda:InvokeFunction"
+        Principal: "cognito-idp.amazonaws.com"
+        SourceArn:
+          Fn::Join: ["", ["arn:aws:cognito-idp:${self:provider.region}:", {Ref: "AWS::AccountId"}, ":userpool/", {Ref: CognitoUserPoolReactServerlessUserPool}]]
     DynamoDbUsersTable:
       Type: 'AWS::DynamoDB::Table'
       DeletionPolicy: Retain
       Properties:
+        TableName: ${self:provider.environment.DYNAMODB_TABLE_USERS}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        GlobalSecondaryIndexes:
+          - IndexName: UserEmailIndex
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: KEYS_ONLY
+            ProvisionedThroughput:
+              ReadCapacityUnits: 1
+              WriteCapacityUnits: 1
+    DynamoDbAuthLogsTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        TableName: ${self:provider.environment.DYNAMODB_TABLE_AUTHLOGS}
         AttributeDefinitions:
           - AttributeName: id
             AttributeType: S
@@ -147,4 +192,3 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-        TableName: ${self:provider.environment.DYNAMODB_TABLE_USER}

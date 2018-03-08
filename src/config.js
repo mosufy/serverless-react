@@ -9,7 +9,8 @@ const config = {
     SECRET_KEY: process.env.FAUNADB_SECRET_KEY,
   },
   dynamodb: {
-    USER_TABLE: process.env.DYNAMODB_TABLE_USER,
+    USERS_TABLE: process.env.DYNAMODB_TABLE_USERS,
+    AUTHLOGS_TABLE: process.env.DYNAMODB_TABLE_AUTHLOGS,
   }
 };
 
