@@ -30,11 +30,6 @@ provider:
         - dynamodb:UpdateItem
       Resource:
         - Fn::GetAtt: ["DynamoDbUsersTable", "Arn"]
-    - Effect: Allow
-      Action:
-        - dynamodb:PutItem
-      Resource:
-        - Fn::GetAtt: ["DynamoDbAuthLogsTable", "Arn"]
 
 custom:
   defaultStage: dev
@@ -74,7 +69,6 @@ functions:
   cognitoPostAuthentication:
       handler: src/app/handlers/awsCognito/postAuthentication.handler
       description: Cognito user logged in post authentication trigger lambda function
-      memorySize: 1024
   billingCreateCharge:
       handler: src/app/handlers/billing/createCharge.handler
       description: Stripe create new charge
@@ -178,17 +172,18 @@ resources:
             ProvisionedThroughput:
               ReadCapacityUnits: 1
               WriteCapacityUnits: 1
-    DynamoDbAuthLogsTable:
-      Type: 'AWS::DynamoDB::Table'
-      DeletionPolicy: Retain
+    ServicePingLogGroup:
       Properties:
-        TableName: ${self:provider.environment.DYNAMODB_TABLE_AUTHLOGS}
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+        RetentionInDays: 30
+    CognitoCustomMessageLogGroup:
+      Properties:
+        RetentionInDays: 30
+    CognitoPostConfirmationLogGroup:
+      Properties:
+        RetentionInDays: 30
+    CognitoPostAuthenticationLogGroup:
+      Properties:
+        RetentionInDays: 365
+    BillingCreateChargeLogGroup:
+      Properties:
+        RetentionInDays: 30

@@ -10,8 +10,7 @@ const config = {
   },
   dynamodb: {
     USERS_TABLE: process.env.DYNAMODB_TABLE_USERS,
-    AUTHLOGS_TABLE: process.env.DYNAMODB_TABLE_AUTHLOGS,
-  }
+  },
 };
 
 export default config;
