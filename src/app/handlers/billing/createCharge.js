@@ -9,7 +9,6 @@ export const handler = (event, context, callback) => {
       callback(null, response(event, res));
     })
     .catch(err => {
-      console.log('err', err);
       callback(null, error(event, err));
     });
 };
@@ -22,18 +21,10 @@ const createCharge = (event) => {
   const amount = requestBody.charge.amount;
   const currency = requestBody.charge.currency;
 
-  return new Promise((resolve, reject) => {
-    return stripe.charges.create({ // Create Stripe charge with token
-      amount,
-      currency,
-      description: 'Serverless Stripe Test charge',
-      source: token,
-    })
-      .then(res => {
-        resolve(res);
-      })
-      .catch(err => {
-        reject(err);
-      });
+  return stripe.charges.create({ // Create Stripe charge with token
+    amount,
+    currency,
+    description: 'Serverless Stripe Test charge',
+    source: token,
   });
 };

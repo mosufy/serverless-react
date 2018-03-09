@@ -22,11 +22,7 @@ const insertUser = (event) => {
     updated_at: datetimenow,
   };
 
-  return new Promise((resolve, reject) => {
-    return dbInsertUser(userData)
-      .then(res => resolve(res))
-      .catch(err => reject(err));
-  });
+  return dbInsertUser(userData);
 };
 
 const dbInsertUser = (userData) => {
