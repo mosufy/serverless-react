@@ -78,6 +78,26 @@ functions:
             method: post
             private: true
             cors: true
+  billingListPlans:
+      handler: src/app/handlers/billing/listPlans.handler
+      description: Stripe list available plans
+      events:
+        - http:
+            path: billing/list-plans
+            method: get
+            private: true
+            cors: true
+  billingCreateSubscription:
+      handler: src/app/handlers/billing/createSubscription.handler
+      description: Stripe subscribe user to billing plan
+      memorySize: 1024
+      timeout: 10
+      events:
+        - http:
+            path: billing/subscribe
+            method: post
+            private: true
+            cors: true
 
 resources:
   Resources:

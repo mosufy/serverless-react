@@ -133,3 +133,7 @@ axios.interceptors.request.use(
 export const pingTest = () => sendRequest('/services/ping', GET, {}, authXAPIKey);
 
 export const createCharge = params => sendRequest('/billing/charge', POST, params, authXAPIKey);
+
+export const createSubscription = params => sendRequest('/billing/subscribe', POST, params, authXAPIKey);
+
+export const getPlans = () => sendRequest('/billing/list-plans', GET, {}, authXAPIKey);

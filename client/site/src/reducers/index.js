@@ -6,6 +6,8 @@ import modal from "./modal";
 import form from "./form";
 import auth from "./auth";
 import billing from "./billing";
+import billingPlans from "./billingPlans";
+import billingPlanSelected from "./billingPlanSelected";
 
 // create reducer object
 const reducers = combineReducers({
@@ -15,6 +17,8 @@ const reducers = combineReducers({
   form,
   auth,
   billing,
+  billingPlans,
+  billingPlanSelected,
 });
 
 export default reducers;

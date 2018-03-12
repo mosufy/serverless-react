@@ -1,5 +1,5 @@
 import * as sdk from '../lib/sdk';
-import { signupCognitoUser, confirmCognitoUser, loginCognitoUser, getCurrentUser, logoutCognitoUser } from "../lib/aws";
+import { signupCognitoUser, confirmCognitoUser, loginCognitoUser, logoutCognitoUser } from "../lib/aws";
 import { showError, showSuccess, dismissAlert } from "./formActions";
 import { toggleLoginModal } from "./modalActions";
 import { history } from "../store";
@@ -44,7 +44,7 @@ export const login = (values) => {
 
     return loginCognitoUser(values)
       .then((res) => {
-        dispatch(storeAuthenticated());
+        dispatch(storeAuthenticated(res));
         dispatch(toggleLoginModal());
         history.push(from.pathname);
       })
@@ -54,26 +54,21 @@ export const login = (values) => {
   }
 };
 
-const storeAuthenticated = () => {
+const storeAuthenticated = (data) => {
   return {
     type: 'STORE_AUTHENTICATED',
+    payload: {
+      userId: data.idToken.payload.sub,
+      email: data.idToken.payload.email,
+      family_name: data.idToken.payload.family_name,
+      given_name: data.idToken.payload.given_name,
+    }
   }
 };
 
 const removeAuthenticated = () => {
   return {
     type: 'REMOVE_AUTHENTICATED',
-  }
-};
-
-export const currentUser = () => {
-  return (dispatch) => {
-    let currentUser = getCurrentUser();
-    if (currentUser !== null) {
-      dispatch(storeAuthenticated());
-    } else {
-      dispatch(removeAuthenticated());
-    }
   }
 };
 

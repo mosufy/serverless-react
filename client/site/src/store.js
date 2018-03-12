@@ -36,6 +36,7 @@ let store = createStore(reducers, persistedState, applyMiddleware(thunk, ...midd
 store.subscribe(throttle(() => {
   saveState({
     // Add more state objects as required for persistence
+    auth: store.getState().auth,
   })
 }, 1000));
 

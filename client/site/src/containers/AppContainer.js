@@ -4,16 +4,11 @@ import { withRouter } from 'react-router-dom';
 
 import App from './../components/App';
 import { toggleLoginModal, toggleRegisterInterestModal } from "../actions/modalActions";
-import { login, currentUser, logout } from "../actions/authActions";
+import { login, logout } from "../actions/authActions";
 import { dismissAlert } from "../actions/formActions";
 
 class AppContainer extends Component {
-  componentDidMount() {
-    this.props.getCurrentUser();
-  }
-
   render() {
-    if (this.props.auth.isLoading) return null;
     return <App {...this.props} />;
   }
 }
@@ -35,9 +30,6 @@ const mapDispatchToProps = dispatch => {
     },
     handleLoginOnSubmit(formValues) {
       dispatch(login(formValues));
-    },
-    getCurrentUser() {
-      dispatch(currentUser());
     },
     handleLogoutOnClick() {
       dispatch(logout());

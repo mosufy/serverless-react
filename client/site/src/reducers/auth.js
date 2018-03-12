@@ -1,12 +1,16 @@
 let initialState = {
   isAuthenticated: false,
-  isLoading: true,
+  isLoading: false,
 };
 
 const auth = (state = initialState, action) => {
   switch (action.type) {
     case 'STORE_AUTHENTICATED':
-      return { isAuthenticated: true, isLoading: false };
+      return {
+        ...action.payload,
+        isAuthenticated: true,
+        isLoading: false
+      };
     case 'REMOVE_AUTHENTICATED':
       return { isAuthenticated: false, isLoading: false };
     default:

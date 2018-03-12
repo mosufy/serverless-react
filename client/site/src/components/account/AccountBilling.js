@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
-import { Breadcrumb, Clearfix, Button } from 'react-bootstrap';
+import { Breadcrumb, Clearfix, Row, Col, Panel } from 'react-bootstrap';
 import StripeCheckout from 'react-stripe-checkout';
+import ButtonLoader from "react-bootstrap-button-loader";
 
 import AccountBreadcrumb from "../common/AccountBreadcrumb";
+import config from "../../config";
+import { getCurrentUser } from "../../lib/aws";
 
 class AccountBilling extends Component {
   render() {
-    const { onStripeCheckoutTokenCallback, billing } = this.props;
+    const { billing, billingPlans, onStripeSubscribeTokenCallback, onStripeSubscribeOpened } = this.props;
 
     return (
       <div>
@@ -15,36 +18,54 @@ class AccountBilling extends Component {
         </AccountBreadcrumb>
 
         <h1>Billing</h1>
-
-        <p>You are not currently subscribed to our services. Click the Pay with Card button below to subscribe to our service.</p>
+        <hr/>
 
         <h2>Available Services</h2>
         <p>The following tuition services are available.</p>
 
         <Clearfix>&nbsp;</Clearfix>
 
-        <h4>Weekly Tuition - Primary School Level</h4>
-        <p><strong>Amount</strong>: SGD 350 / month<br/>
-          <strong>Billing Cycle</strong>: Monthly
-        </p>
+        <Row>
+          {billingPlans.data.map(plan => (
+            <Col md={4} key={plan.id}>
+              <Panel bsStyle="primary">
+                {plan.metadata.isRecommended &&
+                <Panel.Heading>
+                  <Panel.Title style={{ textAlign: 'center' }}>RECOMMENDED</Panel.Title>
+                </Panel.Heading>
+                }
+                <Panel.Body>
+                  <h4>{plan.nickname}</h4>
+                  <p><strong>Amount</strong>: {plan.currency} {plan.amount.display}<br/>
+                    <strong>Billing Cycle</strong>: {plan.interval}
+                  </p>
 
-        {billing !== null && billing.status === 'succeeded' ?
-          (
-            <div>
-              <Button bsStyle="success">Subscription Paid</Button>
-            </div>
-          ) : (
-            <StripeCheckout
-              token={onStripeCheckoutTokenCallback}
-              stripeKey="pk_test_g8oJNFsyvXFjLCm6tE6gkZL9"
-              name="SherTuition"
-              description="Improving Life Together"
-              amount={35000}
-              currency="SGD"
-              email="mosufy+asd@gmail.com"
-              allowRememberMe={false}
-            />
-          )}
+                  {billing !== null ?
+                    (
+                      <div>
+                        <ButtonLoader bsStyle={billing.status === 'active' ? "success" : (billing.status === 'error' ? "danger" : "primary")} loading={billing.status === 'processing'}>{billing.status === 'active' ? "You have an active subscription" : (billing.status === 'error' ? "Error occurred. Please refresh." : "Processing...")}</ButtonLoader>
+                      </div>
+                    ) : (
+                      <StripeCheckout
+                        token={onStripeSubscribeTokenCallback}
+                        stripeKey={config.stripe.CLIENT_KEY}
+                        name="SherTuition"
+                        description={plan.nickname}
+                        amount={plan.amount.value}
+                        currency={plan.currency}
+                        email={getCurrentUser().username}
+                        allowRememberMe={true}
+                        opened={() => onStripeSubscribeOpened(plan.id, plan.amount.value, plan.currency)}
+                        panelLabel="Subscribe for"
+                      />
+                    )
+                  }
+
+                </Panel.Body>
+              </Panel>
+            </Col>
+          ))}
+        </Row>
       </div>
     );
   }

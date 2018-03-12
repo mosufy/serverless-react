@@ -6,7 +6,7 @@
 
 export const loadState = () => {
   try {
-    const serializedState = localStorage.getItem('react-state');
+    const serializedState = localStorage.getItem('reactState');
     if (serializedState === null) {
       return undefined;
     }
@@ -19,7 +19,7 @@ export const loadState = () => {
 export const saveState = (state) => {
   try {
     const serializedState = JSON.stringify(state);
-    localStorage.setItem('reactServerless', serializedState);
+    localStorage.setItem('reactState', serializedState);
   } catch (err) {
     // Ignore for now
   }

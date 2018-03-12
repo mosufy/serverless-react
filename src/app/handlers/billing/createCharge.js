@@ -5,12 +5,8 @@ import config from '../../../config';
 
 export const handler = (event, context, callback) => {
   return createCharge(event)
-    .then(res => {
-      callback(null, response(event, res));
-    })
-    .catch(err => {
-      callback(null, error(event, err));
-    });
+    .then(res => callback(null, response(event, res)))
+    .catch(err => callback(null, error(event, err)));
 };
 
 const stripe = stripePackage(config.stripe.SECRET_KEY);
