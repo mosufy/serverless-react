@@ -5260,6 +5260,10 @@ react-loader@^2.4.0:
     prop-types "^15.5.8"
     spin.js "2.x"
 
+react-loading-animation@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-loading-animation/-/react-loading-animation-1.4.0.tgz#6b13dd148dc8ca15bd1e4136559c7c0bc1a2797c"
+
 react-overlays@^0.8.0:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/react-overlays/-/react-overlays-0.8.3.tgz#fad65eea5b24301cca192a169f5dddb0b20d3ac5"
