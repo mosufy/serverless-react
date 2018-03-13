@@ -47,6 +47,7 @@
   "author": "mosufy <mosufy@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "node-cache": "^4.1.1",
     "stripe": "^5.5.0"
   }
 }
