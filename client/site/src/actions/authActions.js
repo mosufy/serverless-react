@@ -3,6 +3,7 @@ import { signupCognitoUser, confirmCognitoUser, loginCognitoUser, logoutCognitoU
 import { showError, showSuccess, dismissAlert } from "./formActions";
 import { toggleLoginModal } from "./modalActions";
 import { history } from "../store";
+import { resetState } from "../localStorage";
 
 export const signup = (values) => {
   return (dispatch) => {
@@ -66,16 +67,17 @@ const storeAuthenticated = (data) => {
   }
 };
 
-const removeAuthenticated = () => {
+const userLoggedOut = () => {
   return {
-    type: 'REMOVE_AUTHENTICATED',
+    type: 'USER_LOGOUT',
   }
 };
 
 export const logout = () => {
   return (dispatch) => {
     logoutCognitoUser();
-    dispatch(removeAuthenticated());
+    dispatch(userLoggedOut());
+    resetState();
     history.push('/');
   }
 };

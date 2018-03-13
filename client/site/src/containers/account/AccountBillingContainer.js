@@ -3,7 +3,12 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import AccountBilling from "../../components/account/AccountBilling";
-import { onStripeChargeTokenCallback, getPlans, onStripeSubscribeTokenCallback, onStripeSubscribeOpened } from "../../actions/billingActions";
+import {
+  onStripeChargeTokenCallback,
+  getPlans,
+  onStripeSubscribeTokenCallback,
+  onStripeSubscribeOpened
+} from "../../actions/billingActions";
 
 class AccountBillingContainer extends Component {
   componentWillMount() {
@@ -11,7 +16,6 @@ class AccountBillingContainer extends Component {
   }
 
   render() {
-    if (this.props.billingPlans === null) return null;
     return <AccountBilling {...this.props} />;
   }
 }

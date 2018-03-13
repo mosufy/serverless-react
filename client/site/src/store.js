@@ -37,6 +37,7 @@ store.subscribe(throttle(() => {
   saveState({
     // Add more state objects as required for persistence
     auth: store.getState().auth,
+    billingPlans: store.getState().billingPlans,
   })
 }, 1000));
 

@@ -8,9 +8,10 @@ import auth from "./auth";
 import billing from "./billing";
 import billingPlans from "./billingPlans";
 import billingPlanSelected from "./billingPlanSelected";
+import pageLoader from "./pageLoader";
 
 // create reducer object
-const reducers = combineReducers({
+const appReducer = combineReducers({
   router: routerReducer,
   metadata,
   modal,
@@ -19,6 +20,15 @@ const reducers = combineReducers({
   billing,
   billingPlans,
   billingPlanSelected,
+  pageLoader,
 });
+
+const reducers = (state, action) => {
+  if (action.type === 'USER_LOGOUT') {
+    state = undefined
+  }
+
+  return appReducer(state, action);
+};
 
 export default reducers;

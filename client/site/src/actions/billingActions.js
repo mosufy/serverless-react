@@ -27,17 +27,12 @@ export const onStripeChargeTokenCallback = (token) => {
 };
 
 export const getPlans = () => {
-  return (dispatch) => {
-    return sdk.getPlans()
-      .then(res => {
-        dispatch({
-          type: 'STORE_BILLING_PLANS',
-          payload: res.data.message,
-        })
-      })
-      .catch(err => {
-        console.log(err);
-      })
+  return (dispatch, getState) => {
+    if (getState().billingPlans === null) {
+      return sdk.getPlans()
+        .then(res => dispatch({ type: 'STORE_BILLING_PLANS', payload: res.data.message }))
+        .catch(err => console.log(err));
+    }
   }
 };
 

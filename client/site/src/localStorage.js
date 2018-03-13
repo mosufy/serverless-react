@@ -24,3 +24,11 @@ export const saveState = (state) => {
     // Ignore for now
   }
 };
+
+export const resetState = () => {
+  try {
+    localStorage.setItem('reactState', JSON.stringify({}));
+  } catch (err) {
+    // Ignore for now
+  }
+};
