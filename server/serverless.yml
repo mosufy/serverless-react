@@ -44,10 +44,11 @@ custom:
     bucketName: ${opt:distributionFolder, self:custom.env.S3_BUCKET_NAME}
     distributionFolder: ${opt:distributionFolder, 'client/site/build'}
   env: ${file(./env-${self:custom.stage}.yml)}
+  handlerPath: src/app/handlers
 
 functions:
   servicePing:
-    handler: src/app/handlers/services/ping.handler
+    handler: ${self:custom.handlerPath}/services/ping.handler
     description: Service online availability test
     timeout: 1
     reservedConcurrency: 5
@@ -58,19 +59,19 @@ functions:
           private: true
           cors: true
   cognitoCustomMessage:
-      handler: src/app/handlers/awsCognito/customMessage.handler
+      handler: ${self:custom.handlerPath}/awsCognito/customMessage.handler
       description: Cognito user signup custom message trigger lambda function
       timeout: 1
       memorySize: 256
   cognitoPostConfirmation:
-      handler: src/app/handlers/awsCognito/postConfirmation.handler
+      handler: ${self:custom.handlerPath}/awsCognito/postConfirmation.handler
       description: Cognito user signup post confirmation trigger lambda function
       memorySize: 1024
   cognitoPostAuthentication:
-      handler: src/app/handlers/awsCognito/postAuthentication.handler
+      handler: ${self:custom.handlerPath}/awsCognito/postAuthentication.handler
       description: Cognito user logged in post authentication trigger lambda function
   billingCreateCharge:
-      handler: src/app/handlers/billing/createCharge.handler
+      handler: ${self:custom.handlerPath}/billing/createCharge.handler
       description: Stripe create new charge
       events:
         - http:
@@ -79,7 +80,7 @@ functions:
             private: true
             cors: true
   billingListPlans:
-      handler: src/app/handlers/billing/listPlans.handler
+      handler: ${self:custom.handlerPath}/billing/listPlans.handler
       description: Stripe list available plans
       events:
         - http:
@@ -88,7 +89,7 @@ functions:
             private: true
             cors: true
   billingCreateSubscription:
-      handler: src/app/handlers/billing/createSubscription.handler
+      handler: ${self:custom.handlerPath}/billing/createSubscription.handler
       description: Stripe subscribe user to billing plan
       memorySize: 1024
       timeout: 10
