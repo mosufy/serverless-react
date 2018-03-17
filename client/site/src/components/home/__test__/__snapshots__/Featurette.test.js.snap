@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`home.Featurette component testing it renders correctly 1`] = `
+<div
+  className="featurette"
+>
+  <img
+    alt=""
+    className="featurette-image img-circle img-responsive pull-undefined"
+    src={undefined}
+  />
+  <h2
+    className="featurette-heading"
+  >
+     
+    <span
+      className="text-muted"
+    />
+  </h2>
+  <p
+    className="lead"
+  />
+  <button
+    className="btn btn-lg btn-danger"
+    disabled={false}
+    onClick={undefined}
+    type="button"
+  >
+    Register Interest
+  </button>
+</div>
+`;

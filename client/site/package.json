@@ -29,6 +29,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "react-loading-animation": "^1.4.0"
+    "react-loading-animation": "^1.4.0",
+    "react-test-renderer": "^16.2.0"
   }
 }

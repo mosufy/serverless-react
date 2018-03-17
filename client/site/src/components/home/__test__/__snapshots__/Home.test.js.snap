@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`home.Home component testing it renders correctly 1`] = `
+<div>
+  <header
+    className="header-image"
+  >
+    <div
+      className="headline"
+    >
+      <div
+        className="container"
+      >
+        <h1>
+          Sher Tuition
+        </h1>
+        <h2>
+          Improving Life Together
+        </h2>
+      </div>
+    </div>
+  </header>
+  <div
+    className="container"
+  >
+    <hr
+      className="featurette-divider"
+    />
+    <div
+      id="about"
+    />
+    <div
+      className="featurette"
+    >
+      <img
+        alt=""
+        className="featurette-image img-circle img-responsive pull-right"
+        src="featurette1.jpg"
+      />
+      <h2
+        className="featurette-heading"
+      >
+        One-On-One
+         
+        <span
+          className="text-muted"
+        >
+          Because Everyone Is Different
+        </span>
+      </h2>
+      <p
+        className="lead"
+      >
+        Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+      </p>
+      <button
+        className="btn btn-lg btn-danger"
+        disabled={false}
+        onClick={undefined}
+        type="button"
+      >
+        Register Interest
+      </button>
+    </div>
+    <hr
+      className="featurette-divider"
+    />
+    <div
+      className="featurette"
+    >
+      <img
+        alt=""
+        className="featurette-image img-circle img-responsive pull-left"
+        src="featurette2.jpg"
+      />
+      <h2
+        className="featurette-heading"
+      >
+        MOE Certified Tutors
+         
+        <span
+          className="text-muted"
+        >
+          Are Our Quality Assurance
+        </span>
+      </h2>
+      <p
+        className="lead"
+      >
+        Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+      </p>
+      <button
+        className="btn btn-lg btn-danger"
+        disabled={false}
+        onClick={undefined}
+        type="button"
+      >
+        Register Interest
+      </button>
+    </div>
+    <hr
+      className="featurette-divider"
+    />
+    <div
+      className="featurette"
+    >
+      <img
+        alt=""
+        className="featurette-image img-circle img-responsive pull-right"
+        src="featurette3.jpg"
+      />
+      <h2
+        className="featurette-heading"
+      >
+        This Third Heading
+         
+        <span
+          className="text-muted"
+        >
+          Will Seal the Deal
+        </span>
+      </h2>
+      <p
+        className="lead"
+      >
+        Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+      </p>
+      <button
+        className="btn btn-lg btn-danger"
+        disabled={false}
+        onClick={undefined}
+        type="button"
+      >
+        Register Interest
+      </button>
+    </div>
+    <hr
+      className="featurette-divider"
+    />
+  </div>
+</div>
+`;

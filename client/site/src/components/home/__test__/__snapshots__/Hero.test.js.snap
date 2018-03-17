@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`home.Hero component testing it renders correctly 1`] = `
+<header
+  className="header-image"
+>
+  <div
+    className="headline"
+  >
+    <div
+      className="container"
+    >
+      <h1>
+        Sher Tuition
+      </h1>
+      <h2>
+        Improving Life Together
+      </h2>
+    </div>
+  </div>
+</header>
+`;
